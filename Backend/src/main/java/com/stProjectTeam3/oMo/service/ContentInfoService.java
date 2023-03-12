@@ -22,6 +22,7 @@ public class ContentInfoService {
     String apiKey;
 
     private final CreditService creditService;
+    private final VideoService videoService;
 
     // 선택 후 사용
     String image_BasePath = "https://image.tmdb.org/t/p/";
@@ -36,6 +37,8 @@ public class ContentInfoService {
 
         movie.getGenres().forEach(genre -> genreString.add(genre.getName()));
 
+        List<String> movieVideos = videoService.getMovieVideos(id, language);
+
         List<CastDto> movieCast = creditService.getMovieCast(id);
 
         ContentInfoDto contentInfoDto = ContentInfoDto.builder()
@@ -49,6 +52,7 @@ public class ContentInfoService {
                 .voteAverage(movie.getVoteAverage())
                 .release_date(movie.getReleaseDate())
                 .runtime(movie.getRuntime())
+                .videos(movieVideos)
                 .cast(movieCast)
                 .build();
 
@@ -63,6 +67,8 @@ public class ContentInfoService {
 
         tvSeries.getGenres().forEach(genre -> genreString.add(genre.getName()));
 
+        List<String> tvVideos = videoService.getTvVideos(id, language);
+
         List<CastDto> tvCast = creditService.getTvCast(id, language);
 
         ContentInfoDto contentInfoDto = ContentInfoDto.builder()
@@ -76,6 +82,7 @@ public class ContentInfoService {
                 .voteAverage(tvSeries.getVoteAverage())
                 .release_date(tvSeries.getFirstAirDate())
                 .runtime(tvSeries.getEpisodeRuntime().stream().mapToInt(Integer::intValue).sum())
+                .videos(tvVideos)
                 .cast(tvCast)
                 .build();
 
