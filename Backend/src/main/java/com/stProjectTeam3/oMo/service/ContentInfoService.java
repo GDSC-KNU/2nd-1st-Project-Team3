@@ -1,22 +1,27 @@
 package com.stProjectTeam3.oMo.service;
 
+import com.stProjectTeam3.oMo.dto.CastDto;
 import com.stProjectTeam3.oMo.dto.ContentInfoDto;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.TmdbTV;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.tv.TvSeries;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class ContentInfoService {
 
     @Value("${tmdb.key}")
     String apiKey;
+
+    private final CreditService creditService;
 
     // 선택 후 사용
     String image_BasePath = "https://image.tmdb.org/t/p/";
@@ -31,6 +36,8 @@ public class ContentInfoService {
 
         movie.getGenres().forEach(genre -> genreString.add(genre.getName()));
 
+        List<CastDto> movieCast = creditService.getMovieCast(id);
+
         ContentInfoDto contentInfoDto = ContentInfoDto.builder()
                 .id(movie.getId())
                 .original_title(movie.getOriginalTitle())
@@ -42,6 +49,7 @@ public class ContentInfoService {
                 .voteAverage(movie.getVoteAverage())
                 .release_date(movie.getReleaseDate())
                 .runtime(movie.getRuntime())
+                .cast(movieCast)
                 .build();
 
         return contentInfoDto;
@@ -55,6 +63,8 @@ public class ContentInfoService {
 
         tvSeries.getGenres().forEach(genre -> genreString.add(genre.getName()));
 
+        List<CastDto> tvCast = creditService.getTvCast(id, language);
+
         ContentInfoDto contentInfoDto = ContentInfoDto.builder()
                 .id(tvSeries.getId())
                 .original_title(tvSeries.getOriginalName())
@@ -66,6 +76,7 @@ public class ContentInfoService {
                 .voteAverage(tvSeries.getVoteAverage())
                 .release_date(tvSeries.getFirstAirDate())
                 .runtime(tvSeries.getEpisodeRuntime().stream().mapToInt(Integer::intValue).sum())
+                .cast(tvCast)
                 .build();
 
         return contentInfoDto;

@@ -23,5 +23,6 @@ public class ContentInfoDto {
     private float voteAverage;
     private String release_date;
     private int runtime;
+    private List<CastDto> cast;
 
 }
