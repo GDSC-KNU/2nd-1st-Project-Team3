@@ -25,5 +25,6 @@ public class ContentInfoDto {
     private int runtime;
     private List<String> videos;
     private List<CastDto> cast;
+    private ProviderListDto providers;
 
 }

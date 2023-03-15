@@ -31,7 +31,7 @@ public class CreditService {
             CastDto castDto = CastDto.builder()
                     .name(personCast.getName())
                     .character(personCast.getCharacter())
-                    .ProfilePath(image_BasePath + "/" +profile_size[2] + personCast.getProfilePath())
+                    .ProfilePath(image_BasePath +profile_size[2] + personCast.getProfilePath())
                     .build();
 
             castDtoList.add(castDto);
@@ -50,7 +50,7 @@ public class CreditService {
             CastDto castDto = CastDto.builder()
                     .name(personCast.getName())
                     .character(personCast.getCharacter())
-                    .ProfilePath(image_BasePath + "/" + profile_size[2] + personCast.getProfilePath())
+                    .ProfilePath(image_BasePath + profile_size[2] + personCast.getProfilePath())
                     .build();
 
             castDtoList.add(castDto);
