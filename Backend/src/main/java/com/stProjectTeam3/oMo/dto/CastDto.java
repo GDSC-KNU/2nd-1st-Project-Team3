@@ -13,5 +13,5 @@ public class CastDto {
 
     private String name;
     private String character;
-    private String ProfilePath;
+    private String profile_path;
 }
