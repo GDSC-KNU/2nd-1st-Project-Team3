@@ -21,8 +21,8 @@ public class VideoController {
 
     private final VideoService videoService;
 
-    @GetMapping("/movie/{id}/info")
-    public ResponseEntity<List<String>> getMovieVideo(@PathVariable String id){
+    @GetMapping("/movie/{id}/video")
+    public ResponseEntity<List<String>> getMovieVideo(@PathVariable("id") String id){
         try {
             if(!StringUtils.isNumeric(id)) new NoSuchElementException();
 
@@ -35,8 +35,8 @@ public class VideoController {
         }
     }
 
-    @GetMapping("/tvseries/{id}/info")
-    public ResponseEntity<List<String>> getTvVideo(@PathVariable String id){
+    @GetMapping("/tvseries/{id}/video")
+    public ResponseEntity<List<String>> getTvVideo(@PathVariable("id") String id){
         try {
             if(!StringUtils.isNumeric(id)) new NoSuchElementException();
 
