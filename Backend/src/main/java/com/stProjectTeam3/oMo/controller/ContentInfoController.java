@@ -18,7 +18,7 @@ public class ContentInfoController {
 
     private final ContentInfoService contentInfoService;
 
-    @GetMapping("/movie/info/{id}")
+    @GetMapping("/movie/{id}/info")
     public ResponseEntity<ContentInfoDto> getMovieInfo(@PathVariable String id){
         try {
             if(!StringUtils.isNumeric(id)) new NoSuchElementException();
@@ -32,7 +32,7 @@ public class ContentInfoController {
         }
     }
 
-    @GetMapping("/tvseries/info/{id}")
+    @GetMapping("/tvseries/{id}/info")
     public ResponseEntity<ContentInfoDto> getTvSeriesInfo(@PathVariable String id){
         try {
             if(!StringUtils.isNumeric(id)) new NoSuchElementException();
