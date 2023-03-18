@@ -37,6 +37,9 @@ const ImgWrapper = styled.div`
   width: 50%;
   height: 300px;
   margin: 10px 0 10px 0;
+  @media (max-width: 767px) {
+    width: 80%;
+  }
 `;
 
 const ImgGrid = styled.div`
@@ -46,6 +49,10 @@ const ImgGrid = styled.div`
   column-gap: 0.5rem;
   row-gap: 0.5rem;
   width: 50%;
+  @media (max-width: 767px) {
+    width: 80%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 `;
 
 const RankWrapper = styled.div`

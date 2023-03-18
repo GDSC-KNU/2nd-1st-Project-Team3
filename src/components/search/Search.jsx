@@ -7,9 +7,13 @@ const SearchBarWrapper = styled.div`
   display: flex;
   align-items: center;
   width: 50%;
-  margin: 10px 5rem 10px 5rem;
+  margin-top: 10px;
   background-color: #3a3a3a;
   border-radius: 5px;
+
+  @media (max-width: 767px) {
+    width: 80%;
+  }
 `;
 
 const SearchBar = styled.input`
@@ -17,7 +21,7 @@ const SearchBar = styled.input`
   margin: 20px 20px 20px 20px;
   border-radius: 5px;
   font-size: 16px;
-  width: 100%;
+  width: 80%;
   background-color: #3a3a3a;
   :focus {
     outline: none;
