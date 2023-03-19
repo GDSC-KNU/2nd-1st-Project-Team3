@@ -6,14 +6,14 @@ const Detail = ({ clicked, setClicked }) => {
     <>
       <Overlay onClick={() => setClicked()} />
       <Container>
-        <h2>연락처 정보</h2>
-        <img src={clicked.image} alt="프로필사진" />
+        <h2>Search Result</h2>
+        <img src={clicked.image} alt="Content Image" />
         <Info>
-          <InfoLeft> Name : </InfoLeft>
+          <InfoLeft> Title : </InfoLeft>
           <InfoRight>{clicked.title}</InfoRight>
         </Info>
         <Info>
-          <InfoLeft> Phone : </InfoLeft>
+          <InfoLeft> ID : </InfoLeft>
           <InfoRight>{clicked.id}</InfoRight>
         </Info>
       </Container>
