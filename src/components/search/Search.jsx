@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { IoSearch } from "react-icons/io5";
-import { IoChevronForward } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
 const SearchBarWrapper = styled.div`
@@ -20,7 +19,7 @@ const SearchBar = styled.input`
   border: none;
   margin: 20px 20px 20px 20px;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 17px;
   width: 80%;
   background-color: #3a3a3a;
   :focus {
@@ -32,17 +31,13 @@ const SearchBar = styled.input`
 const Search = () => {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate("/ranking");
+    navigate("/search");
   };
 
   return (
     <>
-      <SearchBarWrapper>
-        <IoSearch
-          //  onClick={() => handleClick()}
-          size="24"
-          color="#B0B0B0"
-        />
+      <SearchBarWrapper onClick={() => handleClick()}>
+        <IoSearch size="24" color="#B0B0B0" style={{ padding: 10 }} />
         <SearchBar type="text" placeholder="search" />
       </SearchBarWrapper>
     </>

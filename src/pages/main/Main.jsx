@@ -20,9 +20,8 @@ const Ranking = styled.div`
   align-items: center;
 
   div {
-    display: flex;
     h1 {
-      font-size: 25px;
+      font-size: 22px;
     }
   }
 `;
@@ -33,7 +32,6 @@ const ImgWrapper = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #3a3a3a;
-  border-radius: 5px;
   width: 50%;
   height: 300px;
   margin: 10px 0 10px 0;
@@ -45,7 +43,7 @@ const ImgWrapper = styled.div`
 const ImgGrid = styled.div`
   display: grid;
   border-radius: 5px;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   column-gap: 0.5rem;
   row-gap: 0.5rem;
   width: 50%;
@@ -83,7 +81,7 @@ const Main = () => {
           <div>
             <h1>오늘의 '넷플릭스' 랭킹</h1>
           </div>
-          <IoChevronForward size="40" onClick={handleClick} />
+          <IoChevronForward size="30" onClick={handleClick} />
         </Ranking>
         <ImgGrid>
           <RankWrapper>1</RankWrapper>
@@ -92,8 +90,6 @@ const Main = () => {
           <RankWrapper>4</RankWrapper>
           <RankWrapper>5</RankWrapper>
           <RankWrapper>6</RankWrapper>
-          <RankWrapper>7</RankWrapper>
-          <RankWrapper>8</RankWrapper>
         </ImgGrid>
       </ContentWrapper>
     </>
