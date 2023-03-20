@@ -1,54 +1,54 @@
-import styled from "styled-components";
-import Overlay from "./Overlay";
+// import styled from "styled-components";
+// import Overlay from "./Overlay";
 
-const Detail = ({ clicked, setClicked }) => {
-  return (
-    <>
-      <Overlay onClick={() => setClicked()} />
-      <Container>
-        <h2>Search Result</h2>
-        <img src={clicked.image} alt="Content Image" />
-        <Info>
-          <InfoLeft> Title : </InfoLeft>
-          <InfoRight>{clicked.title}</InfoRight>
-        </Info>
-        <Info>
-          <InfoLeft> ID : </InfoLeft>
-          <InfoRight>{clicked.id}</InfoRight>
-        </Info>
-      </Container>
-    </>
-  );
-};
+// const Detail = ({ clicked, setClicked }) => {
+//   return (
+//     <>
+//       <Overlay onClick={() => setClicked()} />
+//       <Container>
+//         <h2>Search Detail Result</h2>
+//         {/* <img src={clicked.image} alt="Content Image" /> */}
+//         <Info>
+//           <InfoLeft> Title : </InfoLeft>
+//           <InfoRight>{clicked.title}</InfoRight>
+//         </Info>
+//         <Info>
+//           <InfoLeft> ID : </InfoLeft>
+//           <InfoRight>{clicked.id}</InfoRight>
+//         </Info>
+//       </Container>
+//     </>
+//   );
+// };
 
-export default Detail;
+// export default Detail;
 
-const Container = styled.div`
-  position: fixed;
-  margin: 0 auto;
-  left: 0;
-  right: 0;
-  z-index: 500;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 70%;
-  background-color: white;
-  border-radius: 20px;
-  padding-bottom: 30px;
+// const Container = styled.div`
+//   position: fixed;
+//   margin: 0 auto;
+//   left: 0;
+//   right: 0;
+//   z-index: 500;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   width: 70%;
+//   background-color: white;
+//   border-radius: 20px;
+//   padding-bottom: 30px;
 
-  img {
-    width: 300px;
-    margin-bottom: 20px;
-  }
-`;
+//   img {
+//     width: 300px;
+//     margin-bottom: 20px;
+//   }
+// `;
 
-const Info = styled.div``;
+// const Info = styled.div``;
 
-const InfoLeft = styled.span`
-  font-weight: 600;
-  font-size: 18px;
-`;
+// const InfoLeft = styled.span`
+//   font-weight: 600;
+//   font-size: 18px;
+// `;
 
-const InfoRight = styled.span``;
+// const InfoRight = styled.span``;

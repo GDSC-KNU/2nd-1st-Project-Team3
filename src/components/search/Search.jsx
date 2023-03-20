@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { IoSearch } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const SearchBarWrapper = styled.div`
   display: flex;
@@ -34,11 +35,38 @@ const Search = () => {
     navigate("/search");
   };
 
+  const [search, setSearch] = useState("");
+  const [contents, setContents] = useState(null);
+
+  useEffect(() => {
+    const getCountries = async () => {
+      return await fetch(`/search?query=${search}`)
+        .then((res) => {
+          if (!res.ok) {
+            return new Promise.reject("no country found");
+          }
+          return res.json();
+        })
+        .then((list) => {
+          setContents(list);
+        })
+        .catch((err) => console.error(err));
+    };
+    if (search) getCountries();
+  }, [search]);
+
+  const handleInputChange = (e) => {
+    setSearch(e.target.value);
+  };
   return (
     <>
       <SearchBarWrapper onClick={() => handleClick()}>
         <IoSearch size="24" color="#B0B0B0" style={{ padding: 10 }} />
-        <SearchBar type="text" placeholder="search" />
+        <SearchBar
+          type="search"
+          placeholder="search"
+          onChange={handleInputChange}
+        />
       </SearchBarWrapper>
     </>
   );

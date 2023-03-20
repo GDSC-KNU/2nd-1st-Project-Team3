@@ -1,20 +1,5 @@
 import styled from "styled-components";
 
-const Card = ({ id, title, date, image, onClick }) => {
-  return (
-    <CardContainer onClick={onClick}>
-      {/* <img src={image} alt="프로필 사진 오류" /> */}
-      <UserInfo>
-        <Name>{title}</Name>
-        <Info>▶︎ ID : {id}</Info>
-        <Info>▶︎ date : {date}</Info>
-      </UserInfo>
-    </CardContainer>
-  );
-};
-
-export default Card;
-
 const CardContainer = styled.div`
   display: flex;
   padding: 10px;
@@ -41,3 +26,18 @@ const Name = styled.span`
 const Info = styled.span`
   font-size: 14px;
 `;
+
+const Card = ({ id, title, date, poster_path, onClick }) => {
+  return (
+    <CardContainer onClick={onClick}>
+      <img src={poster_path} alt="content poster" />
+      <UserInfo>
+        <Name>{title}</Name>
+        <Info>▶︎ ID : {id}</Info>
+        <Info>▶︎ date : {date}</Info>
+      </UserInfo>
+    </CardContainer>
+  );
+};
+
+export default Card;
