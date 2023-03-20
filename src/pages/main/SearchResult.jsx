@@ -17,6 +17,32 @@ const ContentWrapper = styled.div`
   justify-items: center;
 `;
 
+const SearchBarWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 50%;
+  margin-top: 10px;
+  background-color: #3a3a3a;
+  border-radius: 5px;
+
+  @media (max-width: 767px) {
+    width: 80%;
+  }
+`;
+
+const SearchBar = styled.input`
+  border: none;
+  margin: 20px 20px 20px 20px;
+  border-radius: 5px;
+  font-size: 17px;
+  width: 80%;
+  background-color: #3a3a3a;
+  :focus {
+    outline: none;
+    color: white;
+  }
+`;
+
 const CardContainer = styled.div`
   display: flex;
 
@@ -59,7 +85,7 @@ const Info = styled.span`
   color: #98a4b7;
 `;
 
-function CountryList({ contents }) {
+const ContentList = ({ contents }) => {
   if (!contents) return;
   return contents.map((content) => {
     return (
@@ -74,35 +100,9 @@ function CountryList({ contents }) {
       </CardContainer>
     );
   });
-}
+};
 
-const SearchBarWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  width: 50%;
-  margin-top: 10px;
-  background-color: #3a3a3a;
-  border-radius: 5px;
-
-  @media (max-width: 767px) {
-    width: 80%;
-  }
-`;
-
-const SearchBar = styled.input`
-  border: none;
-  margin: 20px 20px 20px 20px;
-  border-radius: 5px;
-  font-size: 17px;
-  width: 80%;
-  background-color: #3a3a3a;
-  :focus {
-    outline: none;
-    color: white;
-  }
-`;
-
-export default function SearchResult() {
+const SearchResult = () => {
   const [search, setSearch] = useState("");
   const [contents, setContents] = useState(null);
   const navigate = useNavigate();
@@ -115,11 +115,11 @@ export default function SearchResult() {
   };
 
   useEffect(() => {
-    const getCountries = async () => {
+    const getSearchContent = async () => {
       return await fetch(`/search?query=${search}`)
         .then((res) => {
           if (!res.ok) {
-            return new Promise.reject("no country found");
+            return new Promise.reject("no content found");
           }
           return res.json();
         })
@@ -128,7 +128,7 @@ export default function SearchResult() {
         })
         .catch((err) => console.error(err));
     };
-    if (search) getCountries();
+    if (search) getSearchContent();
   }, [search]);
 
   return (
@@ -146,8 +146,10 @@ export default function SearchResult() {
       </MainWrapper>
 
       <ContentWrapper>
-        {search ? <CountryList contents={contents} /> : ""}
+        {search ? <ContentList contents={contents} /> : ""}
       </ContentWrapper>
     </div>
   );
-}
+};
+
+export default SearchResult;
