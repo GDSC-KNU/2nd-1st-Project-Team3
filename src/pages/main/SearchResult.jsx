@@ -4,7 +4,6 @@ import Search from "../../components/search/Search";
 import { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import { getSearchContent } from "../../apis/content";
-import axios from "axios";
 import CardList from "../../components/search/CardList";
 
 const MainWrapper = styled.div`
@@ -14,18 +13,32 @@ const MainWrapper = styled.div`
 
 const ContentWrapper = styled.div`
   display: grid;
+  padding-top: 20px;
   justify-items: center;
 `;
 
 const CardContainer = styled.div`
   display: flex;
+
+  width: 50%;
+  justify-content: flex-start;
   padding: 10px;
-  background-color: rgba(255, 255, 255, 0.7);
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
-    rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  margin: 10px 0 10px 0;
+  transition: all ease 0.2s;
+  border-radius: 10px;
+  /* background-color: #3a3a3a; */
+  :hover {
+    transform: scale(1.03);
+    box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.8);
+  }
 
   img {
-    width: 60px;
+    background-color: #3a3a3a;
+    width: 70px;
+    border-radius: 3px;
+  }
+  @media (max-width: 767px) {
+    width: 80%;
   }
 `;
 
@@ -36,12 +49,14 @@ const UserInfo = styled.div`
   margin-left: 20px;
 `;
 
-const Name = styled.span`
+const Title = styled.span`
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 300;
 `;
 const Info = styled.span`
   font-size: 14px;
+  font-weight: 200;
+  color: #98a4b7;
 `;
 
 function CountryList({ contents }) {
@@ -51,8 +66,10 @@ function CountryList({ contents }) {
       <CardContainer>
         <img src={content.poster_path} alt="content poster" />
         <UserInfo>
-          <Name>{content.title}</Name>
-          <Info>개봉일자 : {content.date}</Info>
+          <Title>{content.title}</Title>
+          <Info>
+            {content.media_type} · {content.date}
+          </Info>
         </UserInfo>
       </CardContainer>
     );
