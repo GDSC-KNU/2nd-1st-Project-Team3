@@ -3,6 +3,7 @@ package com.stProjectTeam3.oMo.service;
 import com.stProjectTeam3.oMo.dto.CastDto;
 import com.stProjectTeam3.oMo.dto.ContentInfoDto;
 import com.stProjectTeam3.oMo.dto.ProviderListDto;
+import com.stProjectTeam3.oMo.dto.SearchResultDto;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.TmdbTV;
@@ -25,6 +26,7 @@ public class ContentInfoService {
     private final CreditService creditService;
     private final VideoService videoService;
     private final ProviderService providerService;
+    private final SimilarService similarService;
 
     // 선택 후 사용
     String image_BasePath = "https://image.tmdb.org/t/p/";
@@ -45,6 +47,8 @@ public class ContentInfoService {
 
         ProviderListDto movieProvider = providerService.getMovieProvider(id);
 
+        List<SearchResultDto> movieRecommend = similarService.getMovieRecommend(id, language, 1);
+
         ContentInfoDto contentInfoDto = ContentInfoDto.builder()
                 .id(movie.getId())
                 .original_title(movie.getOriginalTitle())
@@ -59,6 +63,7 @@ public class ContentInfoService {
                 .videos(movieVideos)
                 .cast(movieCast)
                 .providers(movieProvider)
+                .recommends(movieRecommend)
                 .build();
 
         return contentInfoDto;
@@ -78,6 +83,8 @@ public class ContentInfoService {
 
         ProviderListDto tvProvider = providerService.getTvProvider(id);
 
+        List<SearchResultDto> tvRecommend = similarService.getTvRecommend(id, language, 1);
+
         ContentInfoDto contentInfoDto = ContentInfoDto.builder()
                 .id(tvSeries.getId())
                 .original_title(tvSeries.getOriginalName())
@@ -92,6 +99,7 @@ public class ContentInfoService {
                 .videos(tvVideos)
                 .cast(tvCast)
                 .providers(tvProvider)
+                .recommends(tvRecommend)
                 .build();
 
         return contentInfoDto;

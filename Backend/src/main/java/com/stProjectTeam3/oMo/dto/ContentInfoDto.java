@@ -26,5 +26,6 @@ public class ContentInfoDto {
     private List<String> videos;
     private List<CastDto> cast;
     private ProviderListDto providers;
+    private List<SearchResultDto> recommends;
 
 }
