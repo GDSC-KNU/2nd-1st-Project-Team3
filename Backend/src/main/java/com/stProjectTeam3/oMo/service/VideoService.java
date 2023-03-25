@@ -1,5 +1,6 @@
 package com.stProjectTeam3.oMo.service;
 
+import com.stProjectTeam3.oMo.dto.VideoDto;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbTV;
 import info.movito.themoviedbapi.model.Video;
@@ -16,22 +17,27 @@ public class VideoService {
     @Value("${tmdb.key}")
     String apiKey;
 
-    public List<String> getMovieVideos(int id, String language){
-        List<String> vList = new ArrayList<>();
+    public List<VideoDto> getMovieVideos(int id, String language){
+        List<VideoDto> vList = new ArrayList<>();
 
         List<Video> videos = new TmdbApi(apiKey).getMovies().getVideos(id, language);
         if(videos == null) return vList;
         for (Video video : videos) {
             if(Objects.equals(video.getSite(), "YouTube")){
-                vList.add("https://www.youtube.com/watch?v=" + video.getKey());
+                VideoDto videoDto = VideoDto.builder()
+                        .link("https://www.youtube.com/watch?v=" + video.getKey())
+                        .key(video.getKey())
+                        .build();
+
+                vList.add(videoDto);
             }
         }
 
         return vList;
     }
 
-    public List<String> getTvVideos(int id, String language){
-        List<String> vList = new ArrayList<>();
+    public List<VideoDto> getTvVideos(int id, String language){
+        List<VideoDto> vList = new ArrayList<>();
 
         TmdbTV tvSeries = new TmdbApi(apiKey).getTvSeries();
         List<Video> videos = tvSeries.getSeries(id, language, TmdbTV.TvMethod.videos).getVideos();
@@ -40,8 +46,13 @@ public class VideoService {
             return vList;
         }
         for (Video video : videos) {
-            if(Objects.equals(video.getSite(), "YouTube")) {
-                vList.add("https://www.youtube.com/watch?v=" + video.getKey());
+            if(Objects.equals(video.getSite(), "YouTube")){
+                VideoDto videoDto = VideoDto.builder()
+                        .link("https://www.youtube.com/watch?v=" + video.getKey())
+                        .key(video.getKey())
+                        .build();
+
+                vList.add(videoDto);
             }
         }
 

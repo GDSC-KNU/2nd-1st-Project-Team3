@@ -1,6 +1,7 @@
 package com.stProjectTeam3.oMo.service;
 
 import com.stProjectTeam3.oMo.AppConfig;
+import com.stProjectTeam3.oMo.dto.VideoDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -16,10 +17,10 @@ public class VideoServiceTest {
         String language = "ko-KO";
 
         VideoService videoService = ac.getBean(VideoService.class);
-        List<String> movieVideos = videoService.getMovieVideos(id, language);
+        List<VideoDto> movieVideos = videoService.getMovieVideos(id, language);
 
-        for (String movieVideo : movieVideos) {
-            System.out.println("movieVideo = " + movieVideo);
+        for (VideoDto movieVideo : movieVideos) {
+            System.out.println("link: " + movieVideo.getLink() + " key: " + movieVideo.getKey());
         }
     }
 
@@ -29,10 +30,10 @@ public class VideoServiceTest {
         String language = "ko-KO";
 
         VideoService videoService = ac.getBean(VideoService.class);
-        List<String> tvVideos = videoService.getTvVideos(id, language);
+        List<VideoDto> tvVideos = videoService.getTvVideos(id, language);
 
-        for (String movieVideo : tvVideos) {
-            System.out.println("movieVideo = " + movieVideo);
+        for (VideoDto tvVideo : tvVideos) {
+            System.out.println("link: " + tvVideo.getLink() + " key: " + tvVideo.getKey());
         }
     }
 }

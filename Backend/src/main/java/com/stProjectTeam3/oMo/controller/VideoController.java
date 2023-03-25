@@ -1,5 +1,6 @@
 package com.stProjectTeam3.oMo.controller;
 
+import com.stProjectTeam3.oMo.dto.VideoDto;
 import com.stProjectTeam3.oMo.service.VideoService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -22,7 +23,7 @@ public class VideoController {
     private final VideoService videoService;
 
     @GetMapping("/movie/{id}/video")
-    public ResponseEntity<List<String>> getMovieVideo(@PathVariable("id") String id){
+    public ResponseEntity<List<VideoDto>> getMovieVideo(@PathVariable("id") String id){
         try {
             if(!StringUtils.isNumeric(id)) new NoSuchElementException();
 
@@ -36,7 +37,7 @@ public class VideoController {
     }
 
     @GetMapping("/tvseries/{id}/video")
-    public ResponseEntity<List<String>> getTvVideo(@PathVariable("id") String id){
+    public ResponseEntity<List<VideoDto>> getTvVideo(@PathVariable("id") String id){
         try {
             if(!StringUtils.isNumeric(id)) new NoSuchElementException();
 

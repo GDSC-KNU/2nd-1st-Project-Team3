@@ -1,9 +1,6 @@
 package com.stProjectTeam3.oMo.service;
 
-import com.stProjectTeam3.oMo.dto.CastDto;
-import com.stProjectTeam3.oMo.dto.ContentInfoDto;
-import com.stProjectTeam3.oMo.dto.ProviderListDto;
-import com.stProjectTeam3.oMo.dto.SearchResultDto;
+import com.stProjectTeam3.oMo.dto.*;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.TmdbTV;
@@ -41,7 +38,7 @@ public class ContentInfoService {
 
         movie.getGenres().forEach(genre -> genreString.add(genre.getName()));
 
-        List<String> movieVideos = videoService.getMovieVideos(id, language);
+        List<VideoDto> movieVideos = videoService.getMovieVideos(id, language);
 
         List<CastDto> movieCast = creditService.getMovieCast(id);
 
@@ -77,7 +74,7 @@ public class ContentInfoService {
 
         tvSeries.getGenres().forEach(genre -> genreString.add(genre.getName()));
 
-        List<String> tvVideos = videoService.getTvVideos(id, language);
+        List<VideoDto> tvVideos = videoService.getTvVideos(id, language);
 
         List<CastDto> tvCast = creditService.getTvCast(id, language);
 
