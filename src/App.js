@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import SearchResult from "./pages/main/SearchResult";
+import SearchResult from "./pages/SearchResult";
+import Detailpage from "./pages/Detailpage";
 import Main from "./pages/main/Main";
 
 const App = () => {
@@ -9,6 +10,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/search" element={<SearchResult />} />
+          <Route path="/detail" element={<Detailpage />} />
         </Routes>
       </BrowserRouter>
     </>

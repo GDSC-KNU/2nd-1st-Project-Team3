@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import Search from "../../components/search/Search";
+import Search from "../components/search/Search";
 import { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
-import { getSearchContent } from "../../apis/content";
-import CardList from "../../components/search/CardList";
+import { getSearchContent } from "../apis/content";
+import CardList from "../components/search/CardList";
 
 const MainWrapper = styled.div`
   display: flex;
@@ -133,7 +133,6 @@ const SearchResult = () => {
 
   return (
     <div>
-      {/* <input type="search" onChange={(e) => setSearch(e.target.value)} /> */}
       <MainWrapper>
         <SearchBarWrapper onClick={() => handleClick()}>
           <IoSearch size="24" color="#B0B0B0" style={{ padding: 10 }} />

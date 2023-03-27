@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+.person-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.detail-page{
+  width: 50%;
+  margin: auto;
+}
+
+.poster-back{
+  margin: auto;
+  object-fit: auto;
+}
+
+.recommend-wrap{
+  display: flex;
+  flex-wrap: wrap;
+  padding:10px;
+}
