@@ -1,26 +1,24 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-.person-wrap {
-    display: flex;
-    flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.detail-page{
+.detail-page {
   width: 50%;
   margin: auto;
 }
+hr {
+  margin: 10px 0px;
+}
 
-.poster-back{
+/* .poster-back {
   margin: auto;
   object-fit: auto;
-}
+} */
 
-.recommend-wrap{
+/* .recommend-wrap {
   display: flex;
   flex-wrap: wrap;
-  padding:10px;
-}
+  padding: 10px;
+} */
