@@ -14,7 +14,6 @@ const Overview = styled.div`
   justify-content: space-between;
 `;
 const Title = styled.div`
-
   .title {
     font-size: 200%;
     font-weight: 800;
@@ -88,18 +87,17 @@ const DetailPage = () => {
 
   useEffect(() => {
     // 예시 id = 어바웃타임
-    getMovieInfo((122906));
+    getMovieInfo(122906);
   }, []);
   return (
     <>
       {movieInfo ? (
         <div class="detail-page">
-           <Header></Header>
+          <Header></Header>
           {console.log(movieInfo)}
           <Overview>
             {movieInfo.backdrop_path && (
               <Poster
-
                 src={`https://image.tmdb.org/t/p/w500/${movieInfo.poster_path}`}
                 alt={movieInfo.title}
               />
@@ -108,12 +106,12 @@ const DetailPage = () => {
               <p className="title">{movieInfo.title}</p>
               <p className="eng_title">{movieInfo.original_title}</p>
               <p className="release_date">{movieInfo.release_date}</p>
-              <img 
+              <img
                 class="poster-back"
                 src={`https://image.tmdb.org/t/p/w500/${movieInfo.backdrop_path}`}
                 alt={movieInfo.title}
               />
-             </Title>
+            </Title>
           </Overview>
           {/* Ratings css 필요 */}
           <Ratings></Ratings>
@@ -131,28 +129,28 @@ const DetailPage = () => {
             </div>
             <hr></hr>
             <Provider>
-            <h4>작품 감상</h4>
-            <ul>
-              {movieInfo.providers.flatList.map((provider) => (
-                <li key={provider.name}>
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500/${provider.logo_path}`}
-                    alt={provider.name}
-                    className="provider_img"
-                  />
-                  <span>{provider.name}</span>
-                </li>
-              ))}
-            </ul>
+              <h4>작품 감상</h4>
+              <ul>
+                {movieInfo.providers.flatList.map((provider) => (
+                  <li key={provider.name}>
+                    <img
+                      src={`https://image.tmdb.org/t/p/w500/${provider.logo_path}`}
+                      alt={provider.name}
+                      className="provider_img"
+                    />
+                    <span>{provider.name}</span>
+                  </li>
+                ))}
+              </ul>
             </Provider>
             <hr></hr>
             <div className="movie_info">작품 정보</div>
             <p>{movieInfo.overview}</p>
             <hr></hr>
             <article class="article-wrap"></article>
-              <h4>감독/출연</h4>
-              <div class="person-wrap">
-                {movieInfo.cast.slice(0,9).map((cast) => (
+            <h4>감독/출연</h4>
+            <div class="person-wrap">
+              {movieInfo.cast.slice(0, 9).map((cast) => (
                 <div class="person">
                   <div class="photo">
                     <img
@@ -166,8 +164,8 @@ const DetailPage = () => {
                     <p>{cast.character}</p>
                   </div>
                 </div>
-                 ))}
-              </div>
+              ))}
+            </div>
             <hr></hr>
             <h4>예고편</h4>
             {movieInfo.videos && movieInfo.videos.length > 0 && (
@@ -186,7 +184,7 @@ const DetailPage = () => {
             <hr></hr>
             <h4>추천 컨텐츠</h4>
             <div class="recommend-wrap">
-              {movieInfo.recommends.slice(0,9).map((recommends) => (
+              {movieInfo.recommends.slice(0, 9).map((recommends) => (
                 <div class="recommend">
                   <div class="recommend-poster">
                     <img

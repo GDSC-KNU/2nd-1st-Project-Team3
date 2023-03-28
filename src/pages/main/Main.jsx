@@ -3,6 +3,7 @@ import { IoSearch } from "react-icons/io5";
 import { IoChevronForward } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import Search from "../../components/search/Search";
+import { useEffect, useState } from "react";
 
 const MainWrapper = styled.div`
   display: flex;
@@ -20,13 +21,14 @@ const Ranking = styled.div`
   align-items: center;
 
   div {
+    padding: 10px 0 10px 0;
     h1 {
       font-size: 22px;
     }
   }
 `;
 
-const ImgWrapper = styled.div`
+const VideoWrapper = styled.div`
   display: flex;
   border-radius: 5px;
   justify-content: center;
@@ -54,17 +56,46 @@ const ImgGrid = styled.div`
 `;
 
 const RankWrapper = styled.div`
-  display: flex;
-  border-radius: 5px;
-  justify-content: center;
-  align-items: center;
-  background-color: #3a3a3a;
-  border-radius: 5px;
-  border: white;
-  height: 300px;
+  img {
+    display: flex;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    background-color: #3a3a3a;
+    border-radius: 5px;
+    border: white;
+    height: 300px;
+  }
 `;
 
 const Main = () => {
+  const [content, setContent] = useState([]);
+  // const contentId = useRef(0);
+
+  const getContent = async () => {
+    try {
+      const response = await fetch(`https://ottmowa.kro.kr/ranking`);
+      const data = await response.json();
+      setContent(data);
+      console.log(data);
+    } catch (e) {
+      console(e);
+    }
+
+    // const initContent = response.slice(0, 10).map((it) => {
+    //   return {
+    //     poster_path: it.poster_path,
+    //     title: it.title,
+    //     id: contentId.current++,
+    //   };
+    // });
+    // setContent(initContent);
+  };
+
+  useEffect(() => {
+    getContent();
+  }, []);
+
   const navigate = useNavigate();
   const handleClick = () => {
     navigate("/ranking");
@@ -76,21 +107,36 @@ const Main = () => {
         <Search />
       </MainWrapper>
       <ContentWrapper>
-        <ImgWrapper>예고편</ImgWrapper>
+        <VideoWrapper>예고편</VideoWrapper>
         <Ranking>
           <div>
-            <h1>오늘의 '넷플릭스' 랭킹</h1>
+            <h1>오늘의 통합 랭킹</h1>
           </div>
           <IoChevronForward size="30" onClick={handleClick} />
         </Ranking>
-        <ImgGrid>
-          <RankWrapper>1</RankWrapper>
-          <RankWrapper>2</RankWrapper>
-          <RankWrapper>3</RankWrapper>
-          <RankWrapper>4</RankWrapper>
-          <RankWrapper>5</RankWrapper>
-          <RankWrapper>6</RankWrapper>
-        </ImgGrid>
+        {content ? (
+          <ImgGrid>
+            <RankWrapper>
+              {content.map((li) => (
+                <div key={li.id}>
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500/${li.poster_path}`}
+                    alt={li.title}
+                  />
+                  {li.title}
+                </div>
+              ))}
+            </RankWrapper>
+
+            {/* <RankWrapper>2</RankWrapper>
+            <RankWrapper>3</RankWrapper>
+            <RankWrapper>4</RankWrapper>
+            <RankWrapper>5</RankWrapper>
+            <RankWrapper>6</RankWrapper> */}
+          </ImgGrid>
+        ) : (
+          <p>Loading</p>
+        )}
       </ContentWrapper>
     </>
   );
