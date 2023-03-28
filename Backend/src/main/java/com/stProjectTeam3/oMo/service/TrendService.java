@@ -1,11 +1,14 @@
 package com.stProjectTeam3.oMo.service;
 
 import com.stProjectTeam3.oMo.dto.SearchResultDto;
+import com.stProjectTeam3.oMo.dto.TrendDto;
+import com.stProjectTeam3.oMo.dto.VideoDto;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.TmdbTV;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.tv.TvSeries;
+import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -20,11 +23,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@RequiredArgsConstructor
 @Service
 public class TrendService {
 
     @Value("${tmdb.key}")
     String apiKey;
+
+    private final VideoService videoService;
 
     /*public enum Media_Type{
         ALL("all"), MOVIE("movie"), TV("tv"), PERSON("person");
@@ -59,9 +65,9 @@ public class TrendService {
     String image_BasePath = "https://image.tmdb.org/t/p/";
     String[] post_size = {"w92","w154","w185","w342","w500","w780","original"};
 
-    public List<SearchResultDto> getTrend(/*Media_Type type,*/ Time_Window time){
+    public List<TrendDto> getTrend(/*Media_Type type,*/ Time_Window time){
 
-        List<SearchResultDto> trendList = new ArrayList<>();
+        List<TrendDto> trendList = new ArrayList<>();
 
         try{
             URL url = new URL("https://api.themoviedb.org/3/trending/" + /*type.toString()*/
@@ -93,33 +99,37 @@ public class TrendService {
 
                         TmdbMovies tmdbMovies = new TmdbApi(apiKey).getMovies();
                         MovieDb movie = tmdbMovies.getMovie(id, "ko-KO");
+                        List<VideoDto> movieVideos = videoService.getMovieVideos(id, "ko-KO");
 
-                        SearchResultDto searchResultDto = SearchResultDto.builder()
+                        TrendDto trendDto = TrendDto.builder()
                                 .id(id)
                                 .original_title(movie.getOriginalTitle())
                                 .title(movie.getTitle())
                                 .date(movie.getReleaseDate())
                                 .media_type("MOVIE")
                                 .poster_path(image_BasePath + post_size[4] + movie.getPosterPath())
+                                .videos(movieVideos)
                                 .build();
 
-                        trendList.add(searchResultDto);
+                        trendList.add(trendDto);
                     }
                     else if (Objects.equals(media_type, "tv")){
 
                         TmdbTV tmdbTV = new TmdbApi(apiKey).getTvSeries();
                         TvSeries series = tmdbTV.getSeries(id, "ko-KO");
+                        List<VideoDto> tvVideos = videoService.getTvVideos(id, "ko-KO");
 
-                        SearchResultDto searchResultDto = SearchResultDto.builder()
+                        TrendDto trendDto = TrendDto.builder()
                                 .id(id)
                                 .original_title(series.getOriginalName())
                                 .title(series.getName())
                                 .date(series.getFirstAirDate())
                                 .media_type("TV_SERIES")
                                 .poster_path(image_BasePath + post_size[4] + series.getPosterPath())
+                                .videos(tvVideos)
                                 .build();
 
-                        trendList.add(searchResultDto);
+                        trendList.add(trendDto);
                     }
                     else continue;
                 }

@@ -2,6 +2,7 @@ package com.stProjectTeam3.oMo.service;
 
 import com.stProjectTeam3.oMo.AppConfig;
 import com.stProjectTeam3.oMo.dto.SearchResultDto;
+import com.stProjectTeam3.oMo.dto.TrendDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -17,10 +18,10 @@ public class TrendServiceTest {
 
         TrendService trendService = ac.getBean(TrendService.class);
 
-        List<SearchResultDto> trend = trendService.getTrend(time_window);
+        List<TrendDto> trend = trendService.getTrend(time_window);
 
-        for (SearchResultDto searchResultDto : trend) {
-            System.out.println("id: " + searchResultDto.getId() + " name: " + searchResultDto.getTitle() + " type: " + searchResultDto.getMedia_type());
+        for (TrendDto trendDto : trend) {
+            System.out.println("id: " + trendDto.getId() + " name: " + trendDto.getTitle() + " type: " + trendDto.getMedia_type());
         }
     }
 }

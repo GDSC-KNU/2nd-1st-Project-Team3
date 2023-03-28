@@ -1,6 +1,7 @@
 package com.stProjectTeam3.oMo.controller;
 
 import com.stProjectTeam3.oMo.dto.SearchResultDto;
+import com.stProjectTeam3.oMo.dto.TrendDto;
 import com.stProjectTeam3.oMo.service.TrendService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,7 @@ public class TrendController {
     private final TrendService trendService;
 
     @GetMapping("/ranking")
-    public List<SearchResultDto> getTrend(@RequestParam(value = "time", required = false) String time){
+    public List<TrendDto> getTrend(@RequestParam(value = "time", required = false) String time){
         if(time != null){
             if(Objects.equals(time, "week")){
                 return trendService.getTrend(TrendService.Time_Window.WEEK);
