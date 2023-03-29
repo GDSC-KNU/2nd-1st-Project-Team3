@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import "./Detailpage.css";
 
@@ -114,14 +115,17 @@ const Recommend = styled.div`
   }
 `;
 
-const DetailPage = () => {
-  const [movieInfo, setMovieInfo] = useState(null);
+const DetailPage = (props) => {
+  const { id, mediaType } = useParams();
+  const [mediaInfo, setMediaInfo] = useState(null);
 
-  const getMovieInfo = async (id) => {
+  const getMediaInfo = async (id, mediaType) => {
     try {
-      const response = await fetch(`https://ottmowa.kro.kr/movie/${id}/info`);
+      const response = await fetch(
+        `https://ottmowa.kro.kr/${mediaType}/${id}/info`
+      );
       const data = await response.json();
-      setMovieInfo(data);
+      setMediaInfo(data);
       console.log(data);
     } catch (error) {
       console.error(error);
@@ -129,31 +133,31 @@ const DetailPage = () => {
   };
 
   useEffect(() => {
-    // 예시 id = 어바웃타임
-    getMovieInfo(122906);
-  }, []);
+    getMediaInfo(id, mediaType);
+  }, [id, mediaType]);
+
   return (
     <>
-      {movieInfo ? (
+      {mediaInfo ? (
         <div class="detail-page">
           <Header></Header>
-          {console.log(movieInfo)}
+          {console.log(mediaInfo)}
           {/* <Poster
-            src={`https://image.tmdb.org/t/p/${movieInfo.poster_path}`}
-            alt={movieInfo.title}
+            src={`https://image.tmdb.org/t/p/${mediaInfo.poster_path}`}
+            alt={mediaInfo.title}
           /> */}
           <Overview>
-            {/* {movieInfo.backdrop_path && ( */}
+            {/* {mediaInfo.backdrop_path && ( */}
 
             <div className="Info_wrap">
               <Title>
-                <p className="title">{movieInfo.title}</p>
-                <p className="eng_title">{movieInfo.original_title}</p>
-                <p className="release_date">{movieInfo.release_date}</p>
+                <p className="title">{mediaInfo.title}</p>
+                <p className="eng_title">{mediaInfo.original_title}</p>
+                <p className="release_date">{mediaInfo.release_date}</p>
               </Title>
               <BackGroundImg
-                src={`https://image.tmdb.org/t/p/w500/${movieInfo.backdrop_path}`}
-                alt={movieInfo.title}
+                src={`https://image.tmdb.org/t/p/w500/${mediaInfo.backdrop_path}`}
+                alt={mediaInfo.title}
               />
             </div>
           </Overview>
@@ -177,7 +181,7 @@ const DetailPage = () => {
             <Provider>
               <h4>작품 감상</h4>
               <ul>
-                {movieInfo.providers.flatList.map((provider) => (
+                {mediaInfo.providers.flatList.map((provider) => (
                   <li key={provider.name}>
                     <img
                       src={`https://image.tmdb.org/t/p/w500/${provider.logo_path}`}
@@ -191,12 +195,12 @@ const DetailPage = () => {
             </Provider>
             <hr></hr>
             <div className="movie_info">작품 정보</div>
-            <p>{movieInfo.overview}</p>
+            <p>{mediaInfo.overview}</p>
             <hr></hr>
             <article class="article-wrap"></article>
             <h4>감독/출연</h4>
             <Person>
-              {movieInfo.cast.slice(0, 8).map((cast) => (
+              {mediaInfo.cast.slice(0, 8).map((cast) => (
                 <div class="person">
                   <img
                     src={`https://image.tmdb.org/t/p/w500/${cast.profile_path}`}
@@ -213,12 +217,12 @@ const DetailPage = () => {
             </Person>
             <hr></hr>
             <h4>예고편</h4>
-            {movieInfo.videos && movieInfo.videos.length > 0 && (
+            {mediaInfo.videos && mediaInfo.videos.length > 0 && (
               <>
                 {
                   <Video
-                    title={movieInfo.title}
-                    src={`https://www.youtube.com/embed/${movieInfo.videos[0].key}`}
+                    title={mediaInfo.title}
+                    src={`https://www.youtube.com/embed/${mediaInfo.videos[0].key}`}
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
@@ -229,7 +233,7 @@ const DetailPage = () => {
             <hr></hr>
             <h4>추천 컨텐츠</h4>
             <Recommend>
-              {movieInfo.recommends.slice(0, 8).map((recommends) => (
+              {mediaInfo.recommends.slice(0, 8).map((recommends) => (
                 <div class="container">
                   <img
                     className="item"

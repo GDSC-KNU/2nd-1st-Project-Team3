@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { IoSearch } from "react-icons/io5";
 import { IoChevronForward } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Search from "../../components/search/Search";
 import { useEffect, useState } from "react";
 
@@ -118,13 +118,19 @@ const Main = () => {
           <ImgGrid>
             <RankWrapper>
               {content.map((li) => (
-                <div key={li.id}>
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500/${li.poster_path}`}
-                    alt={li.title}
-                  />
-                  {li.title}
-                </div>
+                <Link
+                  to={{
+                    pathname: `/detail/${li.id}/${li.media_type.toLowerCase()}`,
+                  }}
+                >
+                  <div key={li.id}>
+                    <img
+                      src={`https://image.tmdb.org/t/p/w500/${li.poster_path}`}
+                      alt={li.title}
+                    />
+                    {li.title}
+                  </div>
+                </Link>
               ))}
             </RankWrapper>
 

@@ -10,7 +10,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/search" element={<SearchResult />} />
-          <Route path="/detail" element={<Detailpage />} />
+          <Route path="/detail/:id/:mediaType" element={<Detailpage />} />
         </Routes>
       </BrowserRouter>
     </>
