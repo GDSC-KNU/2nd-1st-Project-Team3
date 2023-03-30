@@ -36,7 +36,7 @@ public class VideoController {
         }
     }
 
-    @GetMapping("/tvseries/{id}/video")
+    @GetMapping("/tv_series/{id}/video")
     public ResponseEntity<List<VideoDto>> getTvVideo(@PathVariable("id") String id){
         try {
             if(!StringUtils.isNumeric(id)) new NoSuchElementException();

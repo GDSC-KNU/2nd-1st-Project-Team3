@@ -32,7 +32,7 @@ public class ContentInfoController {
         }
     }
 
-    @GetMapping("/tvseries/{id}/info")
+    @GetMapping("/tv_series/{id}/info")
     public ResponseEntity<ContentInfoDto> getTvSeriesInfo(@PathVariable("id") String id){
         try {
             if(!StringUtils.isNumeric(id)) new NoSuchElementException();

@@ -26,7 +26,7 @@ public class SimilarController {
 //        return similarService.getMovieSimilar(iId, language, iPage);
     }
 
-    @GetMapping("/tvseries/{id}/similar")
+    @GetMapping("/tv_series/{id}/similar")
     public List<SearchResultDto> getTvSimilar(@PathVariable("id") String id, @RequestParam(value = "page", required = false) String page){
         String language = "ko-KO";
         int iId = 1, iPage = 1;
