@@ -1,12 +1,23 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
+import { BiArrowBack } from "react-icons/bi";
+import { HiArrowUpTray, HiMagnifyingGlass } from "react-icons/hi2";
 import "./Detailpage.css";
 
 const Header = styled.div`
   height: 5vh;
   width: 100%;
-  background-color: beige;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.5vw;
+
+  a {
+    color: white;
+  }
+  .h_right {
+  }
 `;
 
 const Title = styled.div`
@@ -115,7 +126,7 @@ const Recommend = styled.div`
   }
 `;
 
-const DetailPage = (props) => {
+const DetailPage = () => {
   const { id, mediaType } = useParams();
   const [mediaInfo, setMediaInfo] = useState(null);
 
@@ -126,7 +137,7 @@ const DetailPage = (props) => {
       );
       const data = await response.json();
       setMediaInfo(data);
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       console.error(error);
     }
@@ -140,7 +151,15 @@ const DetailPage = (props) => {
     <>
       {mediaInfo ? (
         <div class="detail-page">
-          <Header></Header>
+          <Header>
+            <Link to={"/"} style={{ textDecoration: "none" }}>
+              <BiArrowBack></BiArrowBack>
+            </Link>
+            <div className="h_right">
+              <HiArrowUpTray></HiArrowUpTray>
+              <HiMagnifyingGlass></HiMagnifyingGlass>
+            </div>
+          </Header>
           {console.log(mediaInfo)}
           {/* <Poster
             src={`https://image.tmdb.org/t/p/${mediaInfo.poster_path}`}
