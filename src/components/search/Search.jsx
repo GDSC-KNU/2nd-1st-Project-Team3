@@ -61,7 +61,7 @@ const Search = () => {
   return (
     <>
       <SearchBarWrapper onClick={() => handleClick()}>
-        <IoSearch size="24" color="#B0B0B0" style={{ padding: 10 }} />
+        <IoSearch size="40" color="#B0B0B0" style={{ padding: 10 }} />
         <SearchBar
           type="search"
           placeholder="search"

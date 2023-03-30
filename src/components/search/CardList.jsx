@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import Card from "./Card";
-import Detail from "./Detail";
+import DetailPage from "../../pages/detail/Detailpage";
 
 const CardListContainer = styled.div`
   display: flex;
@@ -26,15 +25,15 @@ const CardList = ({ searchTerm }) => {
         <CardListContainer>
           {/* {searchTerm &&
             searchTerm.map((search) => ( */}
-          <Card
+          {/* <Card
             title={search.title}
             id={search.id}
             key={`${search.id}`}
             date={search.date}
-          />
+          /> */}
           {/* ))} */}
 
-          {/* {clicked && <Detail clicked={clicked} setClicked={setClicked} />} */}
+          {/* {clicked && <DetailPage clicked={clicked} setClicked={setClicked} />} */}
         </CardListContainer>
       );
     })

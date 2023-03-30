@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import Search from "../components/search/Search";
+import Search from "../../components/search/Search";
 import { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
-import { getSearchContent } from "../apis/content";
-import CardList from "../components/search/CardList";
+import { getSearchContent } from "../../apis/content";
+import CardList from "../../components/search/CardList";
+import DetailPage from "../detail/Detailpage";
 
 const MainWrapper = styled.div`
   display: flex;
@@ -86,10 +87,18 @@ const Info = styled.span`
 `;
 
 const ContentList = ({ contents }) => {
+  const [clicked, setClicked] = useState();
+
+  const handleCardClick = (id) => {
+    setClicked(contents.find((el) => el.id === id));
+  };
   if (!contents) return;
   return contents.map((content) => {
     return (
-      <CardContainer>
+      <CardContainer
+        key={content.id}
+        onClick={() => handleCardClick(content.id)}
+      >
         <img src={content.poster_path} alt="content poster" />
         <UserInfo>
           <Title>{content.title}</Title>
@@ -97,6 +106,7 @@ const ContentList = ({ contents }) => {
             {content.media_type} · {content.date}
           </Info>
         </UserInfo>
+        {clicked && <DetailPage clicked={clicked} setClicked={setClicked} />}
       </CardContainer>
     );
   });
@@ -135,7 +145,7 @@ const SearchResult = () => {
     <div>
       <MainWrapper>
         <SearchBarWrapper onClick={() => handleClick()}>
-          <IoSearch size="24" color="#B0B0B0" style={{ padding: 10 }} />
+          <IoSearch size="40" color="#B0B0B0" style={{ padding: 10 }} />
           <SearchBar
             type="search"
             placeholder="search"

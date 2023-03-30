@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { IoSearch } from "react-icons/io5";
 import { IoChevronForward } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Search from "../../components/search/Search";
 import { useEffect, useState } from "react";
 
@@ -29,74 +29,92 @@ const Ranking = styled.div`
 `;
 
 const VideoWrapper = styled.div`
-  display: flex;
-  border-radius: 5px;
-  justify-content: center;
-  align-items: center;
-  background-color: #3a3a3a;
-  width: 50%;
-  height: 300px;
-  margin: 10px 0 10px 0;
-  @media (max-width: 767px) {
-    width: 80%;
-  }
-`;
-
-const ImgGrid = styled.div`
-  display: grid;
-  border-radius: 5px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  column-gap: 0.5rem;
-  row-gap: 0.5rem;
-  width: 50%;
-  @media (max-width: 767px) {
-    width: 80%;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-`;
-
-const RankWrapper = styled.div`
-  img {
+  iframe {
     display: flex;
     border-radius: 5px;
     justify-content: center;
     align-items: center;
     background-color: #3a3a3a;
+    width: 100%;
+    height: 400px;
+    margin: 10px 0 10px 0;
+  }
+  @media (max-width: 767px) {
+    width: 80%;
+    iframe {
+      height: 300px;
+    }
+  }
+  @media (min-width: 768px) {
+    width: 50%;
+    iframe {
+      height: 400px;
+    }
+  }
+`;
+
+const ImgGrid = styled.div``;
+
+const RankWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  img {
+    /* display: grid; */
+    border-radius: 5px;
+    justify-content: center;
+    background-color: #3a3a3a;
     border-radius: 5px;
     border: white;
     height: 300px;
   }
+  h1 {
+    display: grid;
+    font-size: 16px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media (max-width: 767px) {
+    /* width: 80%; */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 `;
 
 const Main = () => {
+  const navigate = useNavigate();
   const [content, setContent] = useState([]);
-  // const contentId = useRef(0);
+  const [video, setVideo] = useState(null);
 
   const getContent = async () => {
     try {
-      const response = await fetch(`https://ottmowa.kro.kr/ranking`);
+      const response = await fetch(`/ranking`);
       const data = await response.json();
       setContent(data);
       console.log(data);
     } catch (e) {
       console(e);
     }
+  };
 
-    // const initContent = response.slice(0, 10).map((it) => {
-    //   return {
-    //     poster_path: it.poster_path,
-    //     title: it.title,
-    //     id: contentId.current++,
-    //   };
-    // });
-    // setContent(initContent);
+  const getVideo = async (id) => {
+    try {
+      const response = await fetch(`/movie/${id}/info`);
+      const data = await response.json();
+      setVideo(data);
+      console.log(data);
+    } catch (e) {
+      console(e);
+    }
   };
 
   useEffect(() => {
     getContent();
   }, []);
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    getVideo(122906);
+  }, []);
+
   const handleClick = () => {
     navigate("/ranking");
   };
@@ -107,7 +125,29 @@ const Main = () => {
         <Search />
       </MainWrapper>
       <ContentWrapper>
-        <VideoWrapper>예고편</VideoWrapper>
+        <>
+          {video ? (
+            <>
+              {video.videos && video.videos.length > 0 && (
+                <>
+                  {
+                    <VideoWrapper>
+                      <iframe
+                        title={video.title}
+                        src={`https://www.youtube.com/embed/${video.videos[0].key}?autoplay=1&mute=1`}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    </VideoWrapper>
+                  }
+                </>
+              )}
+            </>
+          ) : (
+            <p>Video Loading</p>
+          )}
+        </>
         <Ranking>
           <div>
             <h1>오늘의 통합 랭킹</h1>
@@ -118,21 +158,21 @@ const Main = () => {
           <ImgGrid>
             <RankWrapper>
               {content.map((li) => (
-                <div key={li.id}>
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500/${li.poster_path}`}
-                    alt={li.title}
-                  />
-                  {li.title}
-                </div>
+                <Link
+                  to={{
+                    pathname: `/detail/${li.id}/${li.media_type.toLowerCase()}`,
+                  }}
+                >
+                  <div key={li.id}>
+                    <img
+                      src={`https://image.tmdb.org/t/p/w500/${li.poster_path}`}
+                      alt={li.title}
+                    />
+                    <h1>{li.title}</h1>
+                  </div>
+                </Link>
               ))}
             </RankWrapper>
-
-            {/* <RankWrapper>2</RankWrapper>
-            <RankWrapper>3</RankWrapper>
-            <RankWrapper>4</RankWrapper>
-            <RankWrapper>5</RankWrapper>
-            <RankWrapper>6</RankWrapper> */}
           </ImgGrid>
         ) : (
           <p>Loading</p>

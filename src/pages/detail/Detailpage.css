@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.detail-page {
+  width: 50%;
+  margin: auto;
+}
+hr {
+  margin: 10px 0px;
+}
+
+/* .poster-back {
+  margin: auto;
+  object-fit: auto;
+} */
+
+/* .recommend-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+} */
