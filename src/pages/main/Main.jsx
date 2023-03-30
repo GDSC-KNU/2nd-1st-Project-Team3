@@ -135,7 +135,6 @@ const Main = () => {
                       <iframe
                         title={video.title}
                         src={`https://www.youtube.com/embed/${video.videos[0].key}?autoplay=1&mute=1`}
-                        frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
                       />
