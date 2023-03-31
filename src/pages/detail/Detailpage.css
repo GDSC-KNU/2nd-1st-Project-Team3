@@ -22,3 +22,8 @@ hr {
   flex-wrap: wrap;
   padding: 10px;
 } */
+
+.video-wrap {
+  justify-content: center;
+
+}
