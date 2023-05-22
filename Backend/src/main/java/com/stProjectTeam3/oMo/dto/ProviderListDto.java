@@ -5,13 +5,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.List;
+
 @AllArgsConstructor
 @ToString
 @Getter
 @Builder
-public class CastDto {
+public class ProviderListDto {
 
-    private String name;
-    private String character;
-    private String profile_path;
+    private List<ProviderDto> buyList;
+    private List<ProviderDto> rentList;
+    private List<ProviderDto> flatList;
 }

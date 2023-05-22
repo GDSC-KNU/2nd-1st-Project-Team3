@@ -9,9 +9,8 @@ import lombok.ToString;
 @ToString
 @Getter
 @Builder
-public class CastDto {
+public class VideoDto {
 
-    private String name;
-    private String character;
-    private String profile_path;
+    private String link;
+    private String key;
 }

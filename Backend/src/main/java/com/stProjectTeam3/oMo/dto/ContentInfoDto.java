@@ -23,6 +23,9 @@ public class ContentInfoDto {
     private float voteAverage;
     private String release_date;
     private int runtime;
+    private List<VideoDto> videos;
     private List<CastDto> cast;
+    private ProviderListDto providers;
+    private List<SearchResultDto> recommends;
 
 }

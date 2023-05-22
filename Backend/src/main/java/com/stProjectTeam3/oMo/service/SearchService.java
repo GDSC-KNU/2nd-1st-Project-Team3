@@ -40,7 +40,7 @@ public class SearchService {
                         .title(md.getTitle())
                         .date(md.getReleaseDate())
                         .media_type("MOVIE")
-                        .poster_path(image_BasePath + post_size[4] + "/" + md.getPosterPath())
+                        .poster_path(image_BasePath + post_size[4] + md.getPosterPath())
                         .build();
                 searchResultDtoList.add(searchResultDto);
             }
@@ -52,7 +52,7 @@ public class SearchService {
                         .title(ts.getName())
                         .date(ts.getFirstAirDate())
                         .media_type("TV_SERIES")
-                        .poster_path(image_BasePath + post_size[4] + "/" + ts.getPosterPath())
+                        .poster_path(image_BasePath + post_size[4] + ts.getPosterPath())
                         .build();
                 searchResultDtoList.add(searchResultDto);
             }

@@ -4,7 +4,6 @@ import com.stProjectTeam3.oMo.dto.CastDto;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.TmdbTV;
-import info.movito.themoviedbapi.model.Credits;
 import info.movito.themoviedbapi.model.people.PersonCast;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -31,7 +30,7 @@ public class CreditService {
             CastDto castDto = CastDto.builder()
                     .name(personCast.getName())
                     .character(personCast.getCharacter())
-                    .ProfilePath(image_BasePath + "/" +profile_size[2] + personCast.getProfilePath())
+                    .profile_path(image_BasePath +profile_size[2] + personCast.getProfilePath())
                     .build();
 
             castDtoList.add(castDto);
@@ -50,7 +49,7 @@ public class CreditService {
             CastDto castDto = CastDto.builder()
                     .name(personCast.getName())
                     .character(personCast.getCharacter())
-                    .ProfilePath(image_BasePath + "/" + profile_size[2] + personCast.getProfilePath())
+                    .profile_path(image_BasePath + profile_size[2] + personCast.getProfilePath())
                     .build();
 
             castDtoList.add(castDto);

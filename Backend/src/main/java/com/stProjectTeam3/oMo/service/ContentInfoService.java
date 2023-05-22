@@ -1,7 +1,6 @@
 package com.stProjectTeam3.oMo.service;
 
-import com.stProjectTeam3.oMo.dto.CastDto;
-import com.stProjectTeam3.oMo.dto.ContentInfoDto;
+import com.stProjectTeam3.oMo.dto.*;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.TmdbTV;
@@ -22,6 +21,9 @@ public class ContentInfoService {
     String apiKey;
 
     private final CreditService creditService;
+    private final VideoService videoService;
+    private final ProviderService providerService;
+    private final SimilarService similarService;
 
     // 선택 후 사용
     String image_BasePath = "https://image.tmdb.org/t/p/";
@@ -36,20 +38,29 @@ public class ContentInfoService {
 
         movie.getGenres().forEach(genre -> genreString.add(genre.getName()));
 
+        List<VideoDto> movieVideos = videoService.getMovieVideos(id, language);
+
         List<CastDto> movieCast = creditService.getMovieCast(id);
+
+        ProviderListDto movieProvider = providerService.getMovieProvider(id);
+
+        List<SearchResultDto> movieRecommend = similarService.getMovieRecommend(id, language, 1);
 
         ContentInfoDto contentInfoDto = ContentInfoDto.builder()
                 .id(movie.getId())
                 .original_title(movie.getOriginalTitle())
                 .title(movie.getTitle())
-                .backdrop_path(image_BasePath + backdrop_size[2] + "/" + movie.getBackdropPath())
-                .poster_path(image_BasePath + post_size[6] + "/" + movie.getPosterPath())
+                .backdrop_path(image_BasePath + backdrop_size[2] + movie.getBackdropPath())
+                .poster_path(image_BasePath + post_size[6] + movie.getPosterPath())
                 .genres(genreString)
                 .overview(movie.getOverview())
                 .voteAverage(movie.getVoteAverage())
                 .release_date(movie.getReleaseDate())
                 .runtime(movie.getRuntime())
+                .videos(movieVideos)
                 .cast(movieCast)
+                .providers(movieProvider)
+                .recommends(movieRecommend)
                 .build();
 
         return contentInfoDto;
@@ -63,20 +74,29 @@ public class ContentInfoService {
 
         tvSeries.getGenres().forEach(genre -> genreString.add(genre.getName()));
 
+        List<VideoDto> tvVideos = videoService.getTvVideos(id, language);
+
         List<CastDto> tvCast = creditService.getTvCast(id, language);
+
+        ProviderListDto tvProvider = providerService.getTvProvider(id);
+
+        List<SearchResultDto> tvRecommend = similarService.getTvRecommend(id, language, 1);
 
         ContentInfoDto contentInfoDto = ContentInfoDto.builder()
                 .id(tvSeries.getId())
                 .original_title(tvSeries.getOriginalName())
                 .title(tvSeries.getName())
-                .backdrop_path(image_BasePath + backdrop_size[2] + "/" + tvSeries.getBackdropPath())
-                .poster_path(image_BasePath + post_size[6] + "/" + tvSeries.getPosterPath())
+                .backdrop_path(image_BasePath + backdrop_size[2] + tvSeries.getBackdropPath())
+                .poster_path(image_BasePath + post_size[6] + tvSeries.getPosterPath())
                 .genres(genreString)
                 .overview(tvSeries.getOverview())
                 .voteAverage(tvSeries.getVoteAverage())
                 .release_date(tvSeries.getFirstAirDate())
                 .runtime(tvSeries.getEpisodeRuntime().stream().mapToInt(Integer::intValue).sum())
+                .videos(tvVideos)
                 .cast(tvCast)
+                .providers(tvProvider)
+                .recommends(tvRecommend)
                 .build();
 
         return contentInfoDto;
