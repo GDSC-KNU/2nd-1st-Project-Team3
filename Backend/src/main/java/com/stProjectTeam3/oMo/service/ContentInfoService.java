@@ -1,6 +1,8 @@
 package com.stProjectTeam3.oMo.service;
 
 import com.stProjectTeam3.oMo.dto.*;
+import com.stProjectTeam3.oMo.entity.Content;
+import com.stProjectTeam3.oMo.repository.ContentRepository;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.TmdbTV;
@@ -25,6 +27,8 @@ public class ContentInfoService {
     private final ProviderService providerService;
     private final SimilarService similarService;
 
+    private final ContentRepository contentRepository;
+
     // 선택 후 사용
     String image_BasePath = "https://image.tmdb.org/t/p/";
     String[] post_size = {"w92","w154","w185","w342","w500","w780","original"};
@@ -33,6 +37,24 @@ public class ContentInfoService {
     public ContentInfoDto getMovieInfo(int id, String language){
         TmdbMovies tmdbMovies = new TmdbApi(apiKey).getMovies();
         MovieDb movie = tmdbMovies.getMovie(id, language);
+
+        try {
+            if (contentRepository.findByIdAndTYPE(Long.valueOf(id), "MOVIE").isEmpty()) {
+                Content content = Content.builder()
+                        .id(Long.valueOf(id))
+                        .original_title(movie.getOriginalTitle())
+                        .title(movie.getTitle())
+                        .date(movie.getReleaseDate())
+                        .media_type("MOVIE")
+                        .poster_path(image_BasePath + post_size[6] + movie.getPosterPath())
+                        .build();
+
+                contentRepository.save(content);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
 
         List<String> genreString = new ArrayList<String>();
 
@@ -69,6 +91,24 @@ public class ContentInfoService {
     public ContentInfoDto getTvSeriesInfo(int id, String language){
         TmdbTV tmdbTV = new TmdbApi(apiKey).getTvSeries();
         TvSeries tvSeries = tmdbTV.getSeries(id, language);
+
+        try {
+            if (contentRepository.findByIdAndTYPE(Long.valueOf(id), "TV_SERIES").isEmpty()) {
+                Content content = Content.builder()
+                        .id(Long.valueOf(id))
+                        .original_title(tvSeries.getOriginalName())
+                        .title(tvSeries.getName())
+                        .date(tvSeries.getFirstAirDate())
+                        .media_type("TV_SERIES")
+                        .poster_path(image_BasePath + post_size[6] + tvSeries.getPosterPath())
+                        .build();
+
+                contentRepository.save(content);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
 
         List<String> genreString = new ArrayList<String>();
 
