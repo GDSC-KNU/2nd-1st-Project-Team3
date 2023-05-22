@@ -15,11 +15,11 @@ import java.util.Optional;
 @Service
 public class WatchService {
 
-    private WatchRepository watchRepository;
+    private final WatchRepository watchRepository;
 
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
-    private ContentRepository contentRepository;
+    private final ContentRepository contentRepository;
 
     public boolean check(String account, Long contentId, String type) throws Exception{
         try {
@@ -55,5 +55,14 @@ public class WatchService {
 
     public Optional<Watch> getWatch(Long userId, Long contentId){
         return watchRepository.findByUseridAndContentid(userId, contentId);
+    }
+
+    public boolean getWatchedContent(String account, Long contentId, String type){
+        Optional<Member> member = memberRepository.findByAccount(account);
+        Optional<Content> content = contentRepository.findByIdAndTYPE(contentId, type);
+
+        Optional<Watch> watchCheck = getWatch(member.get().getId(), content.get().getContentid());
+        if(watchCheck.isEmpty()) return false;
+        return true;
     }
 }

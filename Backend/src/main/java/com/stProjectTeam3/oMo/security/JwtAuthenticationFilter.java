@@ -1,9 +1,12 @@
 package com.stProjectTeam3.oMo.security;
 
 import com.stProjectTeam3.oMo.security.JwtProvider;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -31,12 +34,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             // check access token
             token = token.split(" ")[1].trim();
             UsernamePasswordAuthenticationToken auth = jwtProvider.getAuthentication(token);
+            auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
 
         try {
             filterChain.doFilter(request, response);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ServletException e) {
             throw new RuntimeException(e);

@@ -66,6 +66,7 @@ public class SecurityConfig {
                 // /user 로 시작하는 요청은 USER 권한이 있는 유저에게만 허용
                 .antMatchers("/user/**").hasRole("USER")
                 .antMatchers("/watch/**").hasRole("USER")
+                .antMatchers("/like/**").hasRole("USER")
                 .antMatchers("/search", "/movie/**","/tv_series/**","/ranking").permitAll()
                 .anyRequest().denyAll()
                 .and()
