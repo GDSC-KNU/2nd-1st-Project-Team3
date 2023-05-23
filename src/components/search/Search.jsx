@@ -42,7 +42,7 @@ const LoginButton = styled.button`
   border-radius: 5px;
   padding: 10px;
   transition: background-color 0.3s ease;
-  z-index: 1; /* 다른 요소보다 앞에 표시 */
+  z-index: 1;
 
   &:hover {
     background-color: #555555;
