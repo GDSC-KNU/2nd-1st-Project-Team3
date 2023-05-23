@@ -155,39 +155,24 @@ const Signup = () => {
   };
 
   return (
-    <SignupWrapper>
-      <Title>회원가입</Title>
-      <Form onSubmit={handleSubmit}>
-        <FormGroup>
-          <Label>아이디:</Label>
-          <Input type="text" value={account} onChange={handleAccountChange} />
-        </FormGroup>
-        <FormGroup>
-          <Label>비밀번호:</Label>
-          <Input
+    <div>
+      <h1>회원가입</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>사용자명:</label>
+          <input type="text" value={username} onChange={handleUsernameChange} />
+        </div>
+        <div>
+          <label>비밀번호:</label>
+          <input
             type="password"
             value={password}
             onChange={handlePasswordChange}
           />
-        </FormGroup>
-        <FormGroup>
-          <Label>닉네임:</Label>
-          <Input type="text" value={nickname} onChange={handleNicknameChange} />
-        </FormGroup>
-        <FormGroup>
-          <Label>이름:</Label>
-          <Input type="text" value={name} onChange={handleNameChange} />
-        </FormGroup>
-        <FormGroup>
-          <Label>이메일:</Label>
-          <Input type="email" value={email} onChange={handleEmailChange} />
-        </FormGroup>
-        <Button type="submit">회원가입</Button>
-        <Button type="button" onClick={handleLoginClick}>
-          로그인
-        </Button>
-      </Form>
-    </SignupWrapper>
+        </div>
+        <button type="submit">가입하기</button>
+      </form>
+    </div>
   );
 };
 

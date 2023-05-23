@@ -43,37 +43,52 @@ const LoginPage = () => {
     }
   };
 
-  useEffect(() => {
-    if (user) {
-      goToMain();
-    }
-  }, [user]);
   const handleSignupClick = () => {
     navigate("/signup");
   };
 
   return (
-    <div>
-      <h1>로그인</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>사용자명:</label>
-          <input type="text" value={username} onChange={handleUsernameChange} />
-        </div>
-        <div>
-          <label>비밀번호:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
-          />
-        </div>
-        <button type="submit">로그인</button>
-        <button type="button" onClick={handleSignupClick}>
-          회원가입
-        </button>
-      </form>
-    </div>
+    <LoginWrapper>
+      <LoginHead>
+        <LoginNav>
+          <LoginTitle>로그인</LoginTitle>
+          <BackLink to={"/"}>
+            <BiArrowBack></BiArrowBack>
+          </BackLink>
+        </LoginNav>
+      </LoginHead>
+
+      <LoginInputWrapper>
+        <LoginForm onSubmit={handleSubmit}>
+          <FormField>
+            <Label>사용자명:</Label>
+            <Input
+              placeholder="name"
+              type="text"
+              value={username}
+              onChange={handleUsernameChange}
+            />
+          </FormField>
+          <FormField>
+            <Label>비밀번호:</Label>
+            <Input
+              placeholder="password"
+              type="password"
+              value={password}
+              onChange={handlePasswordChange}
+            />
+          </FormField>
+          <ButtonWrapper>
+            <Button type="submit" primary>
+              로그인
+            </Button>
+            <Button type="button" onClick={handleSignupClick}>
+              회원가입
+            </Button>
+          </ButtonWrapper>
+        </LoginForm>
+      </LoginInputWrapper>
+    </LoginWrapper>
   );
 };
 
