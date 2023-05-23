@@ -118,12 +118,13 @@ const Button = styled.button`
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
+  const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
+  const [isLoggedin, setIsLoggedin] = useState(false);
 
   const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+    setAccount(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
@@ -131,17 +132,18 @@ const LoginPage = () => {
   };
 
   const goToMain = () => {
-    navigate("/main");
+    navigate("/");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("로그인 정보:", username, password);
+    console.log("로그인 정보:", account, password);
 
+    
     try {
       const response = await axios.post("https://ottmowa.kro.kr/login", {
-        username,
+        account,
         password,
       });
 
@@ -149,6 +151,7 @@ const LoginPage = () => {
 
       if (data) {
         setUser(data);
+        setIsLoggedin(true);
       } else {
         alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
       }
@@ -182,11 +185,11 @@ const LoginPage = () => {
       <LoginInputWrapper>
         <LoginForm onSubmit={handleSubmit}>
           <FormField>
-            <Label>사용자명:</Label>
+            <Label>아이디:</Label>
             <Input
               placeholder="name"
               type="text"
-              value={username}
+              value={account}
               onChange={handleUsernameChange}
             />
           </FormField>
@@ -200,7 +203,7 @@ const LoginPage = () => {
             />
           </FormField>
           <ButtonWrapper>
-            <Button type="submit" primary>
+            <Button type="submit">
               로그인
             </Button>
             <Button type="button" onClick={handleSignupClick}>

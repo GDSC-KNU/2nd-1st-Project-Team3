@@ -3,6 +3,10 @@ import { IoSearch } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import "../../store/store";
+import { setIsLoggedin } from "../../store/loginReducer";
 
 const SearchBarWrapper = styled.div`
   position: relative;
@@ -57,6 +61,8 @@ const Search = () => {
 
   const [search, setSearch] = useState("");
   const [contents, setContents] = useState(null);
+  const isLoggedin = useSelector((state) => state.login.isLoggedin);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getCountries = async () => {
@@ -81,6 +87,7 @@ const Search = () => {
 
   const handleMainButtonClick = (e) => {
     e.stopPropagation();
+    console.log(isLoggedin);
     navigate("/login");
   };
   return (
@@ -92,7 +99,7 @@ const Search = () => {
           placeholder="search"
           onChange={handleInputChange}
         />
-        <LoginButton size="40" onClick={handleMainButtonClick}>Login</LoginButton>
+        <LoginButton size="40" onClick={handleMainButtonClick}>{isLoggedin ? "Logout" : "Login"}</LoginButton>
       </SearchBarWrapper>
     </>
   );
