@@ -66,21 +66,21 @@ const RankWrapper = styled.div`
     border-radius: 5px;
     border: white;
     height: 300px;
-    margin:auto;
+    margin: auto;
   }
   h1 {
     display: grid;
     font-size: 16px;
     justify-content: center;
     align-items: center;
-    margin-bottom:15px;
+    margin-bottom: 15px;
   }
 
   @media (max-width: 767px) {
     /* width: 80%; */
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .posterImg{
+  .posterImg {
     display: grid;
     align-items: center;
   }
@@ -169,7 +169,7 @@ const Main = () => {
                   }}
                 >
                   <div className="posterImg" key={li.id}>
-                    <img 
+                    <img
                       src={`https://image.tmdb.org/t/p/w500/${li.poster_path}`}
                       alt={li.title}
                     />

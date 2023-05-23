@@ -1,51 +1,3 @@
-// import React, { useState } from "react";
-
-// const SignupPage = () => {
-//   const [username, setUsername] = useState("");
-//   const [password, setPassword] = useState("");
-
-//   const handleUsernameChange = (e) => {
-//     setUsername(e.target.value);
-//   };
-
-//   const handlePasswordChange = (e) => {
-//     setPassword(e.target.value);
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-
-//     // todo : 회원가입 처리 로직 작성
-
-//     console.log("회원가입 정보:", username, password);
-
-//     // todo : 회원가입 완료 후 리다이렉트 등 처리할 수 있음
-//   };
-
-//   return (
-//     <div>
-//       <h1>회원가입</h1>
-//       <form onSubmit={handleSubmit}>
-//         <div>
-//           <label>사용자명:</label>
-//           <input type="text" value={username} onChange={handleUsernameChange} />
-//         </div>
-//         <div>
-//           <label>비밀번호:</label>
-//           <input
-//             type="password"
-//             value={password}
-//             onChange={handlePasswordChange}
-//           />
-//         </div>
-//         <button type="submit">가입하기</button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default SignupPage;
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -121,7 +73,6 @@ const Signup = () => {
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -140,10 +91,14 @@ const Signup = () => {
         "https://ottmowa.kro.kr/register",
         userData
       );
-      console.log(response.data);
 
-      alert("회원가입이 완료되었습니다.");
-      navigate("/login");
+      if (response && response.data) {
+        console.log(response.data);
+        alert("회원가입이 완료되었습니다.");
+        navigate("/login");
+      } else {
+        alert("회원가입 실패");
+      }
     } catch (error) {
       console.log(error);
       alert("회원가입 실패");
@@ -155,24 +110,39 @@ const Signup = () => {
   };
 
   return (
-    <div>
-      <h1>회원가입</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>사용자명:</label>
-          <input type="text" value={username} onChange={handleUsernameChange} />
-        </div>
-        <div>
-          <label>비밀번호:</label>
-          <input
+    <SignupWrapper>
+      <Title>회원가입</Title>
+      <Form onSubmit={handleSubmit}>
+        <FormGroup>
+          <Label>아이디:</Label>
+          <Input type="text" value={account} onChange={handleAccountChange} />
+        </FormGroup>
+        <FormGroup>
+          <Label>비밀번호:</Label>
+          <Input
             type="password"
             value={password}
             onChange={handlePasswordChange}
           />
-        </div>
-        <button type="submit">가입하기</button>
-      </form>
-    </div>
+        </FormGroup>
+        <FormGroup>
+          <Label>닉네임:</Label>
+          <Input type="text" value={nickname} onChange={handleNicknameChange} />
+        </FormGroup>
+        <FormGroup>
+          <Label>이름:</Label>
+          <Input type="text" value={name} onChange={handleNameChange} />
+        </FormGroup>
+        <FormGroup>
+          <Label>이메일:</Label>
+          <Input type="email" value={email} onChange={handleEmailChange} />
+        </FormGroup>
+        <Button type="submit">회원가입</Button>
+        <Button type="button" onClick={handleLoginClick}>
+          로그인
+        </Button>
+      </Form>
+    </SignupWrapper>
   );
 };
 
