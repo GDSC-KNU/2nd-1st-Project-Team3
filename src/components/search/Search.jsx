@@ -2,8 +2,10 @@ import styled from "styled-components";
 import { IoSearch } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
 const SearchBarWrapper = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   width: 50%;
@@ -26,6 +28,24 @@ const SearchBar = styled.input`
   :focus {
     outline: none;
     color: white;
+  }
+`;
+
+const LoginButton = styled.button`
+  position: absolute;
+  right: 10px;
+  background-color: #3a3a3a;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 17px;
+  border-radius: 5px;
+  padding: 10px;
+  transition: background-color 0.3s ease;
+  z-index: 1; /* 다른 요소보다 앞에 표시 */
+
+  &:hover {
+    background-color: #555555;
   }
 `;
 
@@ -58,6 +78,11 @@ const Search = () => {
   const handleInputChange = (e) => {
     setSearch(e.target.value);
   };
+
+  const handleMainButtonClick = (e) => {
+    e.stopPropagation();
+    navigate("/login");
+  };
   return (
     <>
       <SearchBarWrapper onClick={() => handleClick()}>
@@ -67,6 +92,7 @@ const Search = () => {
           placeholder="search"
           onChange={handleInputChange}
         />
+        <LoginButton size="40" onClick={handleMainButtonClick}>Login</LoginButton>
       </SearchBarWrapper>
     </>
   );
