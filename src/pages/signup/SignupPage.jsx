@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { BiArrowBack } from "react-icons/bi";
+import axios from "axios";
 
 const SignupWrapper = styled.div`
   padding-left: 16px;
@@ -109,29 +111,67 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-
-
-
 const SignupPage = () => {
-  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+  const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+  const handleAccountChange = (e) => {
+    setAccount(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleNicknameChange = (e) => {
+    setNickname(e.target.value);
+  };
+
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // todo : 회원가입 처리 로직 작성
+    const userData = {
+      account,
+      password,
+      nickname,
+      name,
+      email,
+    };
 
-    console.log("회원가입 정보:", username, password);
+    console.log(userData);
 
-    // todo : 회원가입 완료 후 리다이렉트 등 처리할 수 있음
+    try {
+      const response = await axios.post(
+        "https://ottmowa.kro.kr/register",
+        userData
+      );
+
+      if (response && response.data) {
+        console.log(response.data);
+        alert("회원가입이 완료되었습니다.");
+        navigate("/login");
+      } else {
+        alert("회원가입 실패");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("회원가입 실패");
+    }
+  };
+
+  const handleLoginClick = () => {
+    navigate("/login");
   };
 
   return (
@@ -148,11 +188,11 @@ const SignupPage = () => {
       <SignupInputWrapper>
         <SignupForm onSubmit={handleSubmit}>
           <FormField>
-            <Label>사용자명:</Label>
+            <Label>아이디:</Label>
             <Input
               type="text"
-              value={username}
-              onChange={handleUsernameChange}
+              value={account}
+              onChange={handleAccountChange}
             />
           </FormField>
           <FormField>
@@ -163,7 +203,34 @@ const SignupPage = () => {
               onChange={handlePasswordChange}
             />
           </FormField>
-          <Button type="submit">가입하기</Button>
+          <FormField>
+            <Label>닉네임:</Label>
+            <Input
+              type="text"
+              value={nickname}
+              onChange={handleNicknameChange}
+            />
+          </FormField>
+          <FormField>
+            <Label>이름:</Label>
+            <Input
+              type="text"
+              value={name}
+              onChange={handleNameChange}
+            />
+          </FormField>
+          <FormField>
+            <Label>이메일:</Label>
+            <Input
+              type="text"
+              value={email}
+              onChange={handleEmailChange}
+            />
+          </FormField>
+          <Button type="submit">회원가입</Button>
+          <Button type="button" onClick={handleLoginClick}>
+          로그인
+        </Button>
         </SignupForm>
       </SignupInputWrapper>
       
