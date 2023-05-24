@@ -4,6 +4,7 @@ import { IoChevronForward } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import Search from "../../components/search/Search";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const MainWrapper = styled.div`
   display: flex;
@@ -90,13 +91,17 @@ const Main = () => {
   const navigate = useNavigate();
   const [content, setContent] = useState([]);
   const [video, setVideo] = useState(null);
+  const login = useSelector((state) => {
+    return state;
+  });
+  console.log(login);
 
   const getContent = async () => {
     try {
       const response = await fetch(`/ranking`);
       const data = await response.json();
       setContent(data);
-      console.log(data);
+      // console.log(data);
     } catch (e) {
       console(e);
     }
@@ -107,7 +112,7 @@ const Main = () => {
       const response = await fetch(`/movie/${id}/info`);
       const data = await response.json();
       setVideo(data);
-      console.log(data);
+      // console.log(data);
     } catch (e) {
       console(e);
     }

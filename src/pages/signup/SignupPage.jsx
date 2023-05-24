@@ -36,7 +36,6 @@ const BackLink = styled(Link)`
   top: 12px;
   color: #efefef;
   z-index: 9001;
-  }
 `;
 
 const SignupTitle = styled.h1`

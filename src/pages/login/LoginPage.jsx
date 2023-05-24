@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { BiArrowBack } from "react-icons/bi";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setIsLoggedin } from "../../store/loginReducer";
 
 const LoginWrapper = styled.div`
   padding-left: 16px;
@@ -117,11 +119,11 @@ const Button = styled.button`
 `;
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
-  const [isLoggedin, setIsLoggedin] = useState(false);
 
   const handleUsernameChange = (e) => {
     setAccount(e.target.value);
@@ -140,7 +142,6 @@ const LoginPage = () => {
 
     console.log("로그인 정보:", account, password);
 
-    
     try {
       const response = await axios.post("https://ottmowa.kro.kr/login", {
         account,
@@ -151,7 +152,7 @@ const LoginPage = () => {
 
       if (data) {
         setUser(data);
-        setIsLoggedin(true);
+        dispatch(setIsLoggedin(true)); // Redux 상태 업데이트
       } else {
         alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
       }
@@ -203,9 +204,7 @@ const LoginPage = () => {
             />
           </FormField>
           <ButtonWrapper>
-            <Button type="submit">
-              로그인
-            </Button>
+            <Button type="submit">로그인</Button>
             <Button type="button" onClick={handleSignupClick}>
               회원가입
             </Button>
