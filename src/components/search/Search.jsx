@@ -61,7 +61,8 @@ const Search = () => {
 
   const [search, setSearch] = useState("");
   const [contents, setContents] = useState(null);
-  const isLoggedin = useSelector((state) => state.login.isLoggedin);
+  const [loginState, setLoginState] = useState("Login");
+  const isLoggedin = useSelector((state) => state.loginSlice);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -88,8 +89,15 @@ const Search = () => {
   const handleMainButtonClick = (e) => {
     e.stopPropagation();
     console.log(isLoggedin);
-    navigate("/login");
+    if (isLoggedin === true) {
+      dispatch(setIsLoggedin(false));
+    } else {
+      navigate("/login");
+      dispatch(setIsLoggedin(true));
+    }
   };
+
+  const loginButtonText = { isLoggedin } ? "Logout" : "Login";
   return (
     <>
       <SearchBarWrapper onClick={() => handleClick()}>
@@ -99,7 +107,9 @@ const Search = () => {
           placeholder="search"
           onChange={handleInputChange}
         />
-        <LoginButton size="40" onClick={handleMainButtonClick}>{isLoggedin ? "Logout" : "Login"}</LoginButton>
+        <LoginButton size="40" onClick={handleMainButtonClick}>
+          {loginButtonText}
+        </LoginButton>
       </SearchBarWrapper>
     </>
   );
