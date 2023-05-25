@@ -90,10 +90,10 @@ const Search = () => {
     e.stopPropagation();
     console.log(isLoggedin);
     if (isLoggedin === true) {
-      dispatch(setIsLoggedin(false));
+      dispatch(setIsLoggedin((cur) => !cur));
     } else {
-      navigate("/login");
-      dispatch(setIsLoggedin(true));
+      dispatch(setIsLoggedin((cur) => !cur));
+      navigate("/");
     }
   };
 
