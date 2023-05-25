@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import "../../store/store";
 import { setIsLoggedin } from "../../store/loginReducer";
+import Mypage from "../../pages/mypage/MyPage";
 
 const SearchBarWrapper = styled.div`
   position: relative;
@@ -53,12 +54,30 @@ const LoginButton = styled.button`
   }
 `;
 
+const MypageButton = styled.button`
+  position: absolute;
+  right: 10px;
+  background-color: #3a3a3a;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 17px;
+  border-radius: 5px;
+  padding: 10px;
+  transition: background-color 0.3s ease;
+  z-index: 1;
+
+  &:hover {
+    background-color: #555555;
+  }
+`;
+
 const Search = () => {
   const navigate = useNavigate();
   const handleClick = () => {
     navigate("/search");
   };
-
+  
   const [search, setSearch] = useState("");
   const [contents, setContents] = useState(null);
   const [loginState, setLoginState] = useState("Login");
@@ -91,9 +110,21 @@ const Search = () => {
     console.log(isLoggedin);
     if (isLoggedin === true) {
       dispatch(setIsLoggedin((cur) => !cur));
+      navigate("/mypage");
     } else {
       dispatch(setIsLoggedin((cur) => !cur));
-      navigate("/");
+      navigate("/login");
+    }
+  };
+
+  const handleMypageButtonClick = (e) => {
+    e.stopPropagation();
+    if (isLoggedin === true) {
+      dispatch(setIsLoggedin((cur) => !cur));
+      navigate("/mypage");
+    } else {
+      dispatch(setIsLoggedin((cur) => !cur));
+      navigate("/login");
     }
   };
 
@@ -107,9 +138,9 @@ const Search = () => {
           placeholder="search"
           onChange={handleInputChange}
         />
-        <LoginButton size="40" onClick={handleMainButtonClick}>
-          {loginButtonText}
-        </LoginButton>
+        <MypageButton size="40" onClick={handleMypageButtonClick}>
+          My
+        </MypageButton>
       </SearchBarWrapper>
     </>
   );
