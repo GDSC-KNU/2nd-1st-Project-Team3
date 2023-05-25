@@ -91,10 +91,8 @@ const Main = () => {
   const navigate = useNavigate();
   const [content, setContent] = useState([]);
   const [video, setVideo] = useState(null);
-  const login = useSelector((state) => {
-    return state;
-  });
-  console.log(login);
+  const login = useSelector((state) => state.login); // 수정: state.login으로 변경
+  console.log(login.user);
 
   const getContent = async () => {
     try {
@@ -168,19 +166,24 @@ const Main = () => {
           <ImgGrid>
             <RankWrapper>
               {content.map((li) => (
-                <Link
-                  to={{
-                    pathname: `/detail/${li.id}/${li.media_type.toLowerCase()}`,
+                <div
+                  className="posterImg"
+                  key={li.id}
+                  onClick={() => {
+                    navigate(
+                      `/detail/${li.id}/${li.media_type.toLowerCase()}`,
+                      {
+                        state: { account: login.user?.account },
+                      }
+                    );
                   }}
                 >
-                  <div className="posterImg" key={li.id}>
-                    <img
-                      src={`https://image.tmdb.org/t/p/w500/${li.poster_path}`}
-                      alt={li.title}
-                    />
-                    <h1>{li.title}</h1>
-                  </div>
-                </Link>
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500/${li.poster_path}`}
+                    alt={li.title}
+                  />
+                  <h1>{li.title}</h1>
+                </div>
               ))}
             </RankWrapper>
           </ImgGrid>

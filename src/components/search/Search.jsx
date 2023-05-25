@@ -62,7 +62,7 @@ const Search = () => {
   const [search, setSearch] = useState("");
   const [contents, setContents] = useState(null);
   const [loginState, setLoginState] = useState("Login");
-  const isLoggedin = useSelector((state) => state.loginSlice);
+  const isLoggedin = useSelector((state) => state.login.isLoggedIn);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -97,7 +97,8 @@ const Search = () => {
     }
   };
 
-  const loginButtonText = { isLoggedin } ? "Logout" : "Login";
+  const loginButtonText = isLoggedin ? "Logout" : "Login";
+
   return (
     <>
       <SearchBarWrapper onClick={() => handleClick()}>

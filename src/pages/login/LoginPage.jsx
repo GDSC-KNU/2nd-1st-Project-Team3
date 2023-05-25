@@ -112,8 +112,8 @@ const Button = styled.button`
   border: none;
   border-radius: 4px;
   font-size: 16px;
-  margin:auto;
-  background-color: black};
+  margin: auto;
+  background-color: black;
   color: #fff;
   cursor: pointer;
 `;
@@ -152,7 +152,7 @@ const LoginPage = () => {
 
       if (data) {
         setUser(data);
-        dispatch(setIsLoggedin(true)); // Redux 상태 업데이트
+        dispatch(setIsLoggedin(true));
       } else {
         alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
       }

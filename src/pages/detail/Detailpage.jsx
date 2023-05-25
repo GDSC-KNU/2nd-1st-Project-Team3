@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { BiArrowBack } from "react-icons/bi";
 import { HiArrowUpTray, HiMagnifyingGlass } from "react-icons/hi2";
 import "./Detailpage.css";
 import { useDispatch, useSelector } from "react-redux";
 import { isWatched } from "../../store/watched";
+import { HiOutlineBookmark, HiOutlineBookmarkSlash } from "react-icons/hi2";
 
 const Header = styled.div`
   height: 5vh;
@@ -123,7 +124,7 @@ const Ratings = styled.div`
       justify-content: center;
       position: relative;
       .season-button {
-        background: none;
+        background: black;
         border: none;
         outline: 0;
         font-family: inherit;
@@ -234,7 +235,7 @@ const Recommend = styled.div`
   @media (max-width: 375px) {
     grid-template-columns: 2fr 2fr;
     grid-template-rows: auto;
-    margitn aouto;
+    margin: auto;
   }
   .item {
     top: 50%;
@@ -242,17 +243,16 @@ const Recommend = styled.div`
     font-size: 30px;
     margin: px;
     width: 10vw;
-
   }
-  .recommend-info{
+  .recommend-info {
     padding: 1px;
   }
-  .recommend-title{
+  .recommend-title {
     text-align: left;
     font-size: 15px;
   }
-  .container{
-    margin:auto;
+  .container {
+    margin: auto;
   }
 `;
 
@@ -262,27 +262,51 @@ const DetailPage = () => {
   const dispatch = useDispatch();
   const watched = useSelector((state) => state.watched);
   console.log(watched);
+  const [isBookmark, setIsBookmark] = useState(false);
+
+  const location = useLocation();
+  const account = location.state && location.state.account;
+
+  const handleToggle = () => {
+    setIsBookmark((prevState) => !prevState);
+
+    const flag = isBookmark ? "uncheck" : "check";
+
+    fetch(`/like/${flag}`, {
+      method: "POST",
+      body: JSON.stringify({
+        account,
+        id,
+        mediaType,
+      }),
+    })
+      .then((response) => {
+        // API 호출에 대한 응답 처리
+        console.log("API 호출 성공,", response.status);
+      })
+      .catch((error) => {
+        // API 호출 중 오류가 발생한 경우에 대한 처리
+        console.log("API 호출 중 오류 발생", error);
+      });
+  };
 
   const getMediaInfo = async (id, mediaType) => {
     try {
-      const response = await fetch(
-        `https://ottmowa.kro.kr/${mediaType}/${id}/info`
-      );
+      const response = await fetch(`/${mediaType}/${id}/info`);
       const data = await response.json();
       setMediaInfo(data);
-      // console.log(data);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleWatched = () => {
-    dispatch(isWatched());
-  };
-
   useEffect(() => {
     getMediaInfo(id, mediaType);
   }, [id, mediaType]);
+
+  const handleWatched = () => {
+    dispatch(isWatched());
+  };
 
   return (
     <>
@@ -302,8 +326,6 @@ const DetailPage = () => {
           {console.log(mediaInfo)}
           {console.log(mediaInfo.id)}
           <Overview>
-            {/* {mediaInfo.backdrop_path && ( */}
-
             <div className="Info_wrap">
               <BackGroundImg>
                 <img
@@ -374,22 +396,12 @@ const DetailPage = () => {
             </div>
             <div class="rating-button-wrap">
               <div class="state-button-wrap">
-                <button class="season-button">
-                  <svg
-                    data-v-e9f48cf4=""
-                    width="32"
-                    height="32"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 32 32"
-                    class=""
-                  >
-                    <path
-                      data-v-e9f48cf4=""
-                      d="M9 9a2 2 0 012-2h10a2 2 0 012 2v15.92a.4.4 0 01-.622.332L16 21l-6.378 4.252A.4.4 0 019 24.92V9z"
-                      fill="#EFEFEF"
-                    ></path>
-                  </svg>
+                <button class="season-button" onClick={handleToggle}>
+                  {isBookmark ? (
+                    <HiOutlineBookmark size="32" />
+                  ) : (
+                    <HiOutlineBookmarkSlash size="32" />
+                  )}
                   <p class="text">찜하기</p>
                 </button>
               </div>
