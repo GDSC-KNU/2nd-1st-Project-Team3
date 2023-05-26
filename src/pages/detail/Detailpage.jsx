@@ -281,11 +281,9 @@ const DetailPage = () => {
       }),
     })
       .then((response) => {
-        // API 호출에 대한 응답 처리
         console.log("API 호출 성공,", response.status);
       })
       .catch((error) => {
-        // API 호출 중 오류가 발생한 경우에 대한 처리
         console.log("API 호출 중 오류 발생", error);
       });
   };
