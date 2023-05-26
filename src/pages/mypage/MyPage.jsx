@@ -89,68 +89,65 @@ const Button = styled.button`
   border: none;
   border-radius: 4px;
   font-size: 16px;
-  margin:auto;
-  background-color: black};
+  margin: auto;
+  background-color: black;
   color: #fff;
   cursor: pointer;
 `;
 
 const Mypage = () => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const isLoggedin = useSelector((state) => state.login.isLoggedin);
-    const [favorites, setFavorites] = useState([]);
-  
-    useEffect(() => {
-      // 즐겨찾기 리스트를 가져오는 비동기 함수
-      const fetchFavorites = async () => {
-        try {
-          // 즐겨찾기 리스트를 가져오는 API 호출 또는 데이터 처리 로직
-          const response = await axios.get("/api/favorites");
-          setFavorites(response.data);
-        } catch (error) {
-          console.error("Failed to fetch favorites:", error);
-        }
-      };
-  
-      if (isLoggedin) {
-        fetchFavorites();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isLoggedin = useSelector((state) => state.login.isLoggedin);
+  const [favorites, setFavorites] = useState([]);
+
+  useEffect(() => {
+    // 즐겨찾기 리스트를 가져오는 비동기 함수
+    const fetchFavorites = async () => {
+      try {
+        // 즐겨찾기 리스트를 가져오는 API 호출 또는 데이터 처리 로직
+        const response = await axios.get("/api/favorites");
+        setFavorites(response.data);
+      } catch (error) {
+        console.error("Failed to fetch favorites:", error);
       }
-    }, [isLoggedin]);
-  
-    const handleLogout = () => {
-      dispatch(setIsLoggedin(false));
-      navigate("/");
     };
-  
-    return (
-      <MypageWrapper>
-        <MypageHead>
-          <MypageNav>
-            <MypageTitle>마이페이지</MypageTitle>
-            <BackLink to={"/"}>
-              <BiArrowBack />
-            </BackLink>
-          </MypageNav>
-        </MypageHead>
-  
-        <MypageContent>
-          {isLoggedin && (
-            <UserInfo>로그인된 계정: {isLoggedin}</UserInfo>
-          )}
-  
-          <FavoritesList>
-            <h3>즐겨찾기 리스트</h3>
-            {favorites.map((favorite) => (
-              <FavoriteItem key={favorite.id}>{favorite.name}</FavoriteItem>
-            ))}
-          </FavoritesList>
-  
-          <Button onClick={handleLogout}>로그아웃</Button>
-        </MypageContent>
-      </MypageWrapper>
-    );
+
+    if (isLoggedin) {
+      fetchFavorites();
+    }
+  }, [isLoggedin]);
+
+  const handleLogout = () => {
+    dispatch(setIsLoggedin(false));
+    navigate("/");
   };
-  
-  export default Mypage;
-  
+
+  return (
+    <MypageWrapper>
+      <MypageHead>
+        <MypageNav>
+          <MypageTitle>마이페이지</MypageTitle>
+          <BackLink to={"/"}>
+            <BiArrowBack />
+          </BackLink>
+        </MypageNav>
+      </MypageHead>
+
+      <MypageContent>
+        {isLoggedin && <UserInfo>로그인된 계정: {isLoggedin}</UserInfo>}
+
+        <FavoritesList>
+          <h3>즐겨찾기 리스트</h3>
+          {favorites.map((favorite) => (
+            <FavoriteItem key={favorite.id}>{favorite.name}</FavoriteItem>
+          ))}
+        </FavoritesList>
+
+        <Button onClick={handleLogout}>로그아웃</Button>
+      </MypageContent>
+    </MypageWrapper>
+  );
+};
+
+export default Mypage;

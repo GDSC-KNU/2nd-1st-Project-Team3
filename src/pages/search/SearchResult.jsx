@@ -1,11 +1,7 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import Search from "../../components/search/Search";
 import { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
-import { getSearchContent } from "../../apis/content";
-import CardList from "../../components/search/CardList";
-import DetailPage from "../detail/Detailpage";
 
 const MainWrapper = styled.div`
   display: flex;
@@ -124,7 +120,6 @@ const ContentList = ({ contents }) => {
               {content.media_type} · {content.date}
             </Info>
           </UserInfo>
-          {/* {clicked && <DetailPage clicked={clicked} setClicked={setClicked} />} */}
         </CardContainer>
       </StyledLink>
     );
