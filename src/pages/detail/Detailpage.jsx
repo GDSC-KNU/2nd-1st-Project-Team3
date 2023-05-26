@@ -312,7 +312,7 @@ const DetailPage = () => {
       {mediaInfo ? (
         <div class="detail-page">
           <Header>
-            <Link to={"/"} style={{ textDecoration: "none" }}>
+            <Link to={"/main"} style={{ textDecoration: "none" }}>
               <BiArrowBack></BiArrowBack>
             </Link>
             <div className="h_right">
