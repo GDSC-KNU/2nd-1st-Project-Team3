@@ -2,6 +2,10 @@ import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
+import { Canvas } from "@react-three/fiber";
+import { Suspense } from "react";
+import { OrbitControls } from "@react-three/drei";
+import { Model } from "./Model";
 
 const BackGround = styled.div`
   background: black;
@@ -123,10 +127,21 @@ const Intro = () => {
           </h1>
         </StyledWord>
         <ImageWrapper ref={imageRef} isInView={isImageInView}>
-          <ResponsiveImage
+          {/* <ResponsiveImage
             src="https://global-uploads.webflow.com/5e4f771ff45e4c54cb345de3/61401cbff9b93566a1e2d6b0_%2525EB%252589%2525B4%2525EC%25258A%2525A4-%2525EA%2525B7%2525B8%2525EB%2525A6%2525AC%2525EB%252593%25259C-%2525EC%25259D%2525B4%2525EB%2525AF%2525B8%2525EC%2525A7%252580-(2).png"
             alt="logo"
-          />
+          /> */}
+          <Canvas
+            camera={{ position: [0, 1.5, 10], zoom: 1.3 }}
+            style={{ width: "800px", height: "600px", marginTop: "100px" }}
+          >
+            <ambientLight />
+            <directionalLight />
+            <OrbitControls />
+            <Suspense fallback={null}>
+              <Model />
+            </Suspense>
+          </Canvas>
         </ImageWrapper>
         <div style={{ textAlign: "center" }}>
           해당 컨텐츠 검색 부터 찜하기 및 추천정보까지,
@@ -135,7 +150,7 @@ const Intro = () => {
         </div>
         <Start
           onClick={() => {
-            navigate("/");
+            navigate("/main");
           }}
         >
           시작하기

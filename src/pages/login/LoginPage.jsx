@@ -177,7 +177,7 @@ const LoginPage = () => {
       <LoginHead>
         <LoginNav>
           <LoginTitle>로그인</LoginTitle>
-          <BackLink to={"/"}>
+          <BackLink to={"/main"}>
             <BiArrowBack></BiArrowBack>
           </BackLink>
         </LoginNav>
