@@ -282,6 +282,7 @@ const DetailPage = () => {
     })
       .then((response) => {
         console.log("API 호출 성공,", response.status);
+        // 현재 401 에러 뜸. 호출은 성공했으나 account가 넘어가지 않는 상태
       })
       .catch((error) => {
         console.log("API 호출 중 오류 발생", error);
